@@ -10,16 +10,16 @@
 
 class BaseObject {
 protected:
-    [[nodiscard]] std::string getClassName() const final { return typeid(*this).name(); }
+    [[nodiscard]] std::string getClassName() const { return typeid(*this).name(); }
 
 public:
     [[nodiscard]] virtual std::string toString() const {
         std::stringstream sstream;
-        sstream << getClassName << '[' << this << ']';
+        sstream << getClassName() << '[' << this << ']';
         return sstream.str();
     }
 
-    [[nodiscard]] bool isIdenticTo(const BaseObject &val) const final { this == val; }
+    [[nodiscard]] bool isIdenticTo(const BaseObject &val) const { return this == &val; }
 
     virtual ~BaseObject() = default;
 };

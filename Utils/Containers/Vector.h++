@@ -38,25 +38,27 @@ public:
         return *this;
     }
 
-    virtual ~Vector() = default;
+    ~Vector() override = default;
 
     T &operator[](long idx) {
         if (idx < 0)
             idx = count() - idx;
 
         try {
-            return vec[idx];
+            // stl does not throws on [] (WTF)
+            return vec.at(idx);
         } catch (std::out_of_range &exc) {
-            throw IndexError(exc);
+            throw IndexError(EXC_PARAMS, exc);
         }
     }
     const T &operator[](long idx) const {
         if (idx < 0)
             idx = count() - idx;
         try {
-            return vec[idx];
+            // stl does not throws on [] (WTF)
+            return vec.at(idx);
         } catch (std::out_of_range &exc) {
-            throw IndexError(exc);
+            throw IndexError(EXC_PARAMS, exc);
         }
     }
 
@@ -66,7 +68,7 @@ public:
     auto begin() { return vec.begin(); }
     auto end() { return vec.end(); }
     auto begin() const { return vec.begin(); }
-    auto end() const { return vec.begin(); }
+    auto end() const { return vec.end(); }
 
     [[nodiscard]] size_t count() const { return vec.size(); }
 
@@ -78,7 +80,9 @@ public:
     size_t valueIndex(const T &val) const {
         auto iter = iterForValue(val);
         if (iter == end())
-            throw NotFoundInCollectionError(*this);
+            throw NotFoundInCollectionError(EXC_PARAMS);
+
+        return iter - begin();
     }
 
     [[nodiscard]] std::string toString() const override {

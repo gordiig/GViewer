@@ -23,7 +23,7 @@ protected:
 
     [[nodiscard]] std::string getFullMessage() const {
         std::stringstream sst;
-        sst << message << std::endl << "Line " << line << "in" << file << std::endl;
+        sst << message << std::endl << "Line " << line << " in " << file << std::endl;
         return sst.str();
     }
 

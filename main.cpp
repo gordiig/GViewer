@@ -9,12 +9,14 @@ int main(int argc, char *argv[]) {
     Vector<int> vec = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     auto it = vec.iterForValue(2);
 
-    std::cout << vec << std::endl;
+    vec.valueIndex(0);
+
+    std::cout << vec << std::endl << vec.toString() << std::endl << vec.valueIndex(0) << ' ' << vec.valueIndex(9) << std::endl;
 
     try {
-        throw std::out_of_range("Catch?");
+        vec[10000];
     } catch (IndexError &exc) {
-        std::cout << exc.what() << std::endl;
+        std::cerr << exc.what() << std::endl;
     }
 
     return 0;
