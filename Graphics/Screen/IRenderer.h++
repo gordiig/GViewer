@@ -14,8 +14,7 @@
 
 class IRenderer {
 protected:
-//    DynArray<std::unique_ptr<ISceneObject>> objectsToRender;
-    std::vector<std::unique_ptr<ISceneObject>> objectsToRender;
+    DynArray<std::unique_ptr<ISceneObject>> objectsToRender;
 
 public:
     IRenderer() noexcept = default;
@@ -26,7 +25,7 @@ public:
     IRenderer& operator = (const IRenderer &copy) noexcept = default;
     IRenderer& operator = (IRenderer &&move) noexcept = default;
 
-    virtual void addToRender(std::unique_ptr<ISceneObject> &&obj) { objectsToRender.push_back(std::move(obj)); }
+    virtual void addToRender(std::unique_ptr<ISceneObject> &&obj) { objectsToRender.append(std::move(obj)); }
 
     virtual Screen render() = 0;
 
