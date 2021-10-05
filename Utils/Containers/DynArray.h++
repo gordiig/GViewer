@@ -2,43 +2,35 @@
 // Created by 17105727 on 29.09.2021.
 //
 
-#ifndef GVIEWER_VECTOR_H
-#define GVIEWER_VECTOR_H
+#ifndef GVIEWER_DYNARRAY_H
+#define GVIEWER_DYNARRAY_H
 
 #include <vector>
 #include <ostream>
 #include <sstream>
+#include "../BaseObject.h++"
 #include "../../Exceptions/Range.h++"
 
 template<typename T>
-class Vector: public BaseObject {
+class DynArray: public BaseObject {
 protected:
     std::vector<T> vec;
 
 public:
-    Vector() = default;
+    DynArray() = default;
 
-    explicit Vector(size_t count) : vec(count) {}
-    Vector(size_t count, const T &val) : vec(count, val) {}
-    explicit Vector(const std::vector<T> &vec) : vec(vec) {}
-    Vector(const std::initializer_list<T> initializerList) : vec(initializerList) {}
+    explicit DynArray(size_t count) : vec(count) { }
+    DynArray(size_t count, const T &val) : vec(count, val) {}
+    explicit DynArray(const std::vector<T> &vec) : vec(vec) {}
+    DynArray(const std::initializer_list<T> initializerList) : vec(initializerList) {}
 
-    Vector(const Vector<T> &copy) { *this = copy; }
-    Vector(Vector<T> &&move) noexcept { *this = move; }
-    Vector<T> &operator=(const Vector<T> &copy) {
-        if (&copy == this)
-            return *this;
+    DynArray(const DynArray<T> &copy) = default;
+    DynArray(DynArray<T> &&move) noexcept = default;
 
-        this->vec = copy.vec;
-        return *this;
-    }
-    Vector<T> &operator=(Vector<T> &&move) noexcept {
-        this->vec = move.vec;
-        move.vec.clear();
-        return *this;
-    }
+    DynArray<T> &operator=(const DynArray<T> &copy) = default;
+    DynArray<T> &operator=(DynArray<T> &&move) noexcept  = default;
 
-    ~Vector() override = default;
+    ~DynArray() override = default;
 
     T &operator[](long idx) {
         if (idx < 0)
@@ -62,13 +54,16 @@ public:
         }
     }
 
-    bool operator==(const Vector &rhs) const { return vec == rhs.vec; }
-    bool operator!=(const Vector &rhs) const { return !(rhs == *this); }
+    bool operator==(const DynArray &rhs) const { return vec == rhs.vec; }
+    bool operator!=(const DynArray &rhs) const { return !(rhs == *this); }
 
     auto begin() { return vec.begin(); }
     auto end() { return vec.end(); }
     auto begin() const { return vec.begin(); }
     auto end() const { return vec.end(); }
+
+    void append(const T &val) { vec.push_back(val); }
+    void append(T &&val) { vec.push_back(std::move(val)); }
 
     [[nodiscard]] size_t count() const { return vec.size(); }
 
@@ -85,17 +80,16 @@ public:
         return iter - begin();
     }
 
+    void reserve(size_t val) { vec.reserve(val); }
+
+    void clear() noexcept { vec.clear(); }
+
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
-        sst << *this;
+        for (const auto &item : vec)
+            sst << item << " ";
         return sst.str();
-    }
-
-    friend std::ostream &operator<<(std::ostream &os, const Vector &vector) {
-        for (const auto &item : vector.vec)
-            os << item << " ";
-        return os;
     }
 };
 
-#endif //GVIEWER_VECTOR_H
+#endif //GVIEWER_DYNARRAY_H

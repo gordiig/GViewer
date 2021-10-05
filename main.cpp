@@ -1,23 +1,43 @@
 #include <QApplication>
 #include <QPushButton>
 #include <iostream>
-#include "Utils/Containers/Vector.h++"
+
+#include "Exceptions/Exception.h++"
+#include "Exceptions/Math.h++"
+#include "Exceptions/Memory.h++"
 #include "Exceptions/Range.h++"
-#include <vector>
+
+#include "Settings/Settings.h++"
+
+#include "Geometry/Basics/Point2.h++"
+#include "Geometry/Basics/Point3.h++"
+#include "Geometry/Basics/Angle.h++"
+#include "Geometry/Basics/Vector.h++"
+#include "Geometry/Transform/PointTransformer.h++"
+
+#include "Graphics/Basics/ShadingCoefficients.h++"
+#include "Graphics/Basics/Vertex.h++"
+#include "Graphics/Basics/RGBA.h++"
+#include "Graphics/Basics/Polygon.h++"
+#include "Graphics/Scene/ISceneObject.h++"
+#include "Graphics/Scene/CompositeSceneObject.h++"
+#include "Graphics/Scene/BaseSceneObject.h++"
+#include "Graphics/Screen/Screen.h++"
+#include "Graphics/Screen/IRenderer.h++"
+#include "Graphics/Screen/Renderer.h++"
+
+#include "Utils/Containers/DynArray.h++"
+#include "Utils/Containers/Matrix.h++"
+#include "Utils/Containers/Pair.h++"
+
 
 int main(int argc, char *argv[]) {
-    Vector<int> vec = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    auto it = vec.iterForValue(2);
 
-    vec.valueIndex(0);
+//    DynArray<std::unique_ptr<ISceneObject>> vec;
+////    auto c = CompositeSceneObject();
+//    std::unique_ptr<ISceneObject> p = std::unique_ptr<CompositeSceneObject>(new CompositeSceneObject());
+//    vec.append(std::move(p));
 
-    std::cout << vec << std::endl << vec.toString() << std::endl << vec.valueIndex(0) << ' ' << vec.valueIndex(9) << std::endl;
-
-    try {
-        vec[10000];
-    } catch (IndexError &exc) {
-        std::cerr << exc.what() << std::endl;
-    }
 
     return 0;
 

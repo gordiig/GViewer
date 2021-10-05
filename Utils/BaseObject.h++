@@ -7,19 +7,25 @@
 
 #include <string>
 #include <sstream>
+#include <ostream>
 
 class BaseObject {
-protected:
+public:
+    // typeid.name() может вообще давать что угодно, но имя класса можно разглядеть
     [[nodiscard]] std::string getClassName() const { return typeid(*this).name(); }
 
-public:
     [[nodiscard]] virtual std::string toString() const {
         std::stringstream sstream;
-        sstream << getClassName() << '[' << this << ']';
+        sstream << getClassName() << " [" << this << ']';
         return sstream.str();
     }
 
     [[nodiscard]] bool isIdenticTo(const BaseObject &val) const { return this == &val; }
+
+    friend std::ostream &operator<<(std::ostream &os, const BaseObject &object) {
+        os << object.toString();
+        return os;
+    }
 
     virtual ~BaseObject() = default;
 };

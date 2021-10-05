@@ -14,7 +14,7 @@
 #define __EXC_PARAMS__ file, line
 #define EXC_PARAMS __FILE__, __LINE__
 
-class Exception: public std::exception, public BaseObject{
+class Exception: public std::exception, public BaseObject {
 protected:
     std::string file;
     size_t line;
@@ -39,6 +39,18 @@ public:
     ~Exception() noexcept override = default;
 
     [[nodiscard]] const char *what() const noexcept override { return fullMessage.c_str(); }
+};
+
+
+class BadArgumentError: public Exception {
+public:
+    BadArgumentError(__EXC_ARGS__) noexcept:
+            Exception(__EXC_PARAMS__, "Bad argument was passed") {}
+
+    BadArgumentError(__EXC_ARGS__, const std::string &msg) noexcept :
+            Exception(__EXC_PARAMS__, msg) {}
+
+    ~BadArgumentError() noexcept override = default;
 };
 
 #endif //GVIEWER_EXCEPTION_H

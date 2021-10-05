@@ -10,8 +10,10 @@
 
 class BadAllocException: public Exception {
 public:
-    explicit BadAllocException(__EXC_ARGS__, const std::bad_alloc &allocException) :
+    explicit BadAllocException(__EXC_ARGS__, const std::bad_alloc &allocException) noexcept :
         Exception(__EXC_PARAMS__, allocException.what()) {}
+
+    ~BadAllocException() noexcept override = default;
 };
 
 #endif //GVIEWER_MEMORY_H

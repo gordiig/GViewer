@@ -16,8 +16,32 @@ find_package(Qt5 COMPONENTS
 add_executable(
         GViewer
         main.cpp
-        Utils/Containers/Vector.h++
-        Exceptions/Exception.h++ Exceptions/Memory.h++ Exceptions/Range.h++ Utils/BaseObject.h++)
+        Utils/Containers/DynArray.h++
+        Utils/BaseObject.h++
+        Utils/Containers/Matrix.h++
+        Exceptions/Exception.h++
+        Exceptions/Memory.h++
+        Exceptions/Range.h++
+        Exceptions/Math.h++
+        Geometry/Basics/Point2.h++
+        Geometry/Basics/Point3.h++
+        Geometry/Basics/Angle.h++
+        Geometry/Basics/Vector.h++
+        Graphics/Basics/ShadingCoefficients.h++
+        Graphics/Basics/Vertex.h++
+        Graphics/Scene/ISceneObject.h++
+        Geometry/Utils/ScaleFactor.h++
+        Geometry/Utils/AngleSystem.h++
+        Graphics/Basics/RGBA.h++
+        Graphics/Screen/Screen.h++
+        Exceptions/Graphics.h++
+        Graphics/Basics/Polygon.h++
+        Geometry/Transform/PointTransformer.h++
+        Graphics/Screen/Renderer.h++
+        Graphics/Screen/IRenderer.h++
+        Settings/Settings.h++
+        Graphics/Scene/CompositeSceneObject.h++
+        Utils/Containers/Pair.h++ Graphics/Scene/BaseSceneObject.h++)
 
 target_link_libraries(GViewer
         PUBLIC
