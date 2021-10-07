@@ -87,7 +87,7 @@ struct Point3: public BaseObject {
         return ans;
     }
     virtual Point3<X, Y, Z> operator / (double rhs) const {
-        if (fabs(rhs) <= 1e-6)
+        if (abs(rhs) <= 1e-6)
             throw DivideByZeroError(EXC_PARAMS);
         return *this * (1/rhs);
     }
@@ -99,7 +99,7 @@ struct Point3: public BaseObject {
         return *this;
     }
     virtual Point3<X, Y, Z>& operator /= (double rhs) {
-        if (fabs(rhs) <= 1e-6)
+        if (abs(rhs) <= 1e-6)
             throw DivideByZeroError(EXC_PARAMS);
         return *this *= (1/rhs);
     }

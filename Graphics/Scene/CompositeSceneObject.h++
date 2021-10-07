@@ -120,15 +120,6 @@ public:
             obj->setToRender();
     }
 
-    [[nodiscard]] std::unique_ptr<ISceneObject> copyUnique() const override {
-        CompositeSceneObject newObj = *this;
-        return std::make_unique<CompositeSceneObject>(std::move(newObj));
-    }
-    [[nodiscard]] std::shared_ptr<ISceneObject> copyShared() const override {
-        CompositeSceneObject newObj = *this;
-        return std::make_shared<CompositeSceneObject>(std::move(newObj));
-    }
-
     ~CompositeSceneObject() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override {

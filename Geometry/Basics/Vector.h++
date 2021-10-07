@@ -6,6 +6,7 @@
 #define GVIEWER_VECTOR_H
 
 #include <ostream>
+#include <cmath>
 #include "Point3.h++"
 #include "../../Exceptions/Math.h++"
 
@@ -24,10 +25,10 @@ struct Vector: public Point3<double, double, double> {
 
     [[nodiscard]] double scalarMultiply(const Vector &rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 
-    [[nodiscard]] double length() const noexcept { return std::sqrt(x*x + y*y + z*z); }
+    [[nodiscard]] double length() const noexcept { return sqrt(x*x + y*y + z*z); }
     [[nodiscard]] Vector normalized() const {
         double len = length();
-        if (fabs(len) <= 1e-6)
+        if (abs(len) <= 1e-6)
             throw DivideByZeroError(EXC_PARAMS, "Vector length is 0");
 
         Vector ans(x / len, y / len, z / len);
