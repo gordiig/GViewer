@@ -8,6 +8,7 @@
 #include <ostream>
 #include <sstream>
 #include "../../Utils/BaseObject.h++"
+#include "../../Exceptions/Math.h++"
 
 template <
         typename X,
@@ -56,29 +57,54 @@ struct Point3: public BaseObject {
         return !(rhs == *this);
     }
 
-    Point3<X, Y, Z> operator + (const Point3<X, Y, Z> &rhs) const noexcept {
+    virtual Point3<X, Y, Z> operator + (const Point3<X, Y, Z> &rhs) const noexcept {
         Point3<X, Y, Z> ans = Point3(x + rhs.x, y + rhs.y, z + rhs.z);
         return ans;
     }
-    Point3<X, Y, Z> operator - (const Point3<X, Y, Z> &rhs) const noexcept {
+    virtual Point3<X, Y, Z> operator - (const Point3<X, Y, Z> &rhs) const noexcept {
         Point3<X, Y, Z> ans = Point3(x - rhs.x, y - rhs.y, z - rhs.z);
         return ans;
     }
 
-    Point3<X, Y, Z>& operator += (const Point3<X, Y, Z> &rhs) noexcept {
+    virtual Point3<X, Y, Z>& operator += (const Point3<X, Y, Z> &rhs) noexcept {
         x += rhs.x;
         y += rhs.y;
         z += rhs.z;
         return *this;
     }
-    Point3<X, Y, Z>& operator -= (const Point3<X, Y, Z> &rhs) noexcept {
+    virtual Point3<X, Y, Z>& operator -= (const Point3<X, Y, Z> &rhs) noexcept {
         x -= rhs.x;
         y -= rhs.y;
         z -= rhs.z;
         return *this;
     }
 
-    Point3<X, Y, Z> operator - () noexcept {
+    virtual Point3<X, Y, Z> operator * (double rhs) const noexcept {
+        Point3 ans(*this);
+        ans.x *= rhs;
+        ans.y *= rhs;
+        ans.z *= rhs;
+        return ans;
+    }
+    virtual Point3<X, Y, Z> operator / (double rhs) const {
+        if (fabs(rhs) <= 1e-6)
+            throw DivideByZeroError(EXC_PARAMS);
+        return *this * (1/rhs);
+    }
+
+    virtual Point3<X, Y, Z>& operator *= (double rhs) noexcept {
+        x *= rhs;
+        y *= rhs;
+        z *= rhs;
+        return *this;
+    }
+    virtual Point3<X, Y, Z>& operator /= (double rhs) {
+        if (fabs(rhs) <= 1e-6)
+            throw DivideByZeroError(EXC_PARAMS);
+        return *this *= (1/rhs);
+    }
+
+    virtual Point3<X, Y, Z> operator - () noexcept {
         Point3<X, Y, Z> ans = Point3(-x, -y, -z);
         return ans;
     }

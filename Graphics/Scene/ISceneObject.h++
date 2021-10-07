@@ -8,8 +8,10 @@
 #include <sstream>
 #include "../../Utils/Containers/DynArray.h++"
 #include "../../Geometry/Basics/Point3.h++"
+#include "../../Geometry/Basics/Vector.h++"
 #include "../../Geometry/Utils/AngleSystem.h++"
 #include "../../Geometry/Utils/ScaleFactor.h++"
+#include "../../Graphics/Materials/IMaterial.h++"
 
 class ISceneObject: public BaseObject {
 protected:
@@ -19,6 +21,8 @@ protected:
 
     AngleSystem angles;
     ScaleFactor sf;
+
+    std::shared_ptr<IMaterial> material;
 
     DynArray<std::unique_ptr<ISceneObject>> subObjects;
 
@@ -31,6 +35,8 @@ public:
 
     [[nodiscard]] virtual const AngleSystem& getAngles() const { return angles; }
     [[nodiscard]] virtual const ScaleFactor& getSf() const { return sf; }
+
+    [[nodiscard]] virtual const IMaterial& getMaterial() const { return *material; }
 
     [[nodiscard]] virtual const DynArray<std::unique_ptr<ISceneObject>>& getSubObjects() const noexcept {
         return subObjects;
@@ -46,9 +52,18 @@ public:
     virtual void turnTo(const AngleSystem &angs) noexcept = 0;
     virtual void scale(const ScaleFactor &sf) noexcept = 0;
 
+    virtual void setMaterial (const std::shared_ptr<IMaterial> &material) noexcept = 0;
+
+    [[nodiscard]] virtual Vector norm() const noexcept = 0;
+
+    [[nodiscard]] virtual double width() const noexcept = 0;
+    [[nodiscard]] virtual double height() const noexcept = 0;
+    [[nodiscard]] virtual double depth() const noexcept = 0;
+
     virtual void setToRender() const = 0;
 
-    [[nodiscard]] virtual std::unique_ptr<ISceneObject> copy() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<ISceneObject> copyUnique() const = 0;
+    [[nodiscard]] virtual std::shared_ptr<ISceneObject> copyShared() const = 0;
 
     ~ISceneObject() noexcept override = default;
 

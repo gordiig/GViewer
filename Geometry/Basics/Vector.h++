@@ -10,55 +10,17 @@
 #include "../../Exceptions/Math.h++"
 
 struct Vector: public Point3<double, double, double> {
-public:
     Vector() noexcept = default;
     Vector(double x, double y, double z) : Point3(x, y, z) {}
+    Vector(const Point3<double, double, double> &pt) : Vector(pt.x, pt.y, pt.z) {}
 
     Vector(const Vector &copy) noexcept = default;
-    Vector(Vector &&move) noexcept { *this = move; }
+    Vector(Vector &&move) noexcept = default;
 
-    Vector& operator = (const Vector &copy) noexcept {
-        x = copy.x;
-        y = copy.y;
-        z = copy.z;
-        return *this;
-    }
-    Vector& operator = (Vector &&move) noexcept {
-        x = move.x;
-        y = move.y;
-        z = move.z;
-        return *this;
-    }
+    Vector& operator = (const Vector &copy) noexcept = default;
+    Vector& operator = (Vector &&move) noexcept = default;
 
     ~Vector() noexcept override = default;
-
-    Vector operator * (double rhs) const noexcept {
-        Vector ans(x * rhs, y * rhs, z * rhs);
-        return ans;
-    }
-    Vector operator / (double rhs) const {
-        if (fabs(rhs) <= 1e-6)
-            throw DivideByZeroError(EXC_PARAMS);
-
-        Vector ans (x / rhs, y / rhs, z / rhs);
-        return ans;
-    }
-
-    Vector& operator *= (double rhs) noexcept {
-        x *= rhs;
-        y *= rhs;
-        z *= rhs;
-        return *this;
-    }
-    Vector& operator /= (double rhs) {
-        if (fabs(rhs) <= 1e-6)
-            throw DivideByZeroError(EXC_PARAMS);
-
-        x /= rhs;
-        y /= rhs;
-        z /= rhs;
-        return *this;
-    }
 
     [[nodiscard]] double scalarMultiply(const Vector &rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 

@@ -21,7 +21,7 @@ protected:
         newVec.reserve(subObjects.count());
 
         for (auto &obj : subObjects)
-            newVec.append(obj->copy());
+            newVec.append(obj->copyUnique());
 
         return newVec;
     }
@@ -42,6 +42,7 @@ public:
         this->scaleOrigin = scaleOrigin;
         this->angles = angles;
         this->sf = sf;
+        this->material = copy.material->copyShared();
         this->subObjects = std::move(copy.copySubObjs());
 
         return *this;
@@ -52,6 +53,7 @@ public:
         this->scaleOrigin = std::move(scaleOrigin);
         this->angles = std::move(angles);
         this->sf = std::move(sf);
+        this->material = std::move(move.material->copyShared());
         this->subObjects = std::move(move.copySubObjs());
 
         return *this;
@@ -99,16 +101,32 @@ public:
             obj->scale(sf);
     }
 
-    void addToSubObjects(std::unique_ptr<ISceneObject> &&obj) { subObjects.append(std::move(obj)); }
+    [[nodiscard]] Vector norm() const noexcept override {
+        Vector ans;
+        for (const auto &obj : subObjects)
+            ans += obj->norm();
+        ans /= (double) subObjects.count();
+        return ans;
+    }
+
+    void setMaterial(const std::shared_ptr<IMaterial> &material) noexcept override {
+        this->material = material;
+        for (auto &obj : subObjects)
+            obj->setMaterial(material);
+    }
 
     void setToRender() const override {
         for (auto &obj : subObjects)
             obj->setToRender();
     }
 
-    [[nodiscard]] std::unique_ptr<ISceneObject> copy() const override {
+    [[nodiscard]] std::unique_ptr<ISceneObject> copyUnique() const override {
         CompositeSceneObject newObj = *this;
-        return std::make_unique<CompositeSceneObject>(newObj);
+        return std::make_unique<CompositeSceneObject>(std::move(newObj));
+    }
+    [[nodiscard]] std::shared_ptr<ISceneObject> copyShared() const override {
+        CompositeSceneObject newObj = *this;
+        return std::make_shared<CompositeSceneObject>(std::move(newObj));
     }
 
     ~CompositeSceneObject() noexcept override = default;

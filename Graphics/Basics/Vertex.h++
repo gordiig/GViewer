@@ -15,43 +15,20 @@
 #include "../../Utils/BaseObject.h++"
 
 
-class Vertex: public BaseObject {
-protected:
+struct Vertex: public BaseObject {
     Coordinate pos;
     TextureCoordinate tx;
     Vector vec;
     ShadingCoefficients sc;
 
-public:
     Vertex(Coordinate pos, TextureCoordinate tx, Vector vec, ShadingCoefficients sc) :
         pos(std::move(pos)), tx(std::move(tx)), vec(std::move(vec)), sc(std::move(sc)) {}
 
-    Vertex(const Vertex &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    Vertex(Vertex &&move) noexcept { *this = move; }
+    Vertex(const Vertex &copy) noexcept = default;
+    Vertex(Vertex &&move) noexcept = default;
 
-    Vertex& operator = (const Vertex &copy) noexcept {
-        pos = copy.pos;
-        tx = copy.tx;
-        vec = copy.vec;
-        sc = copy.sc;
-        return *this;
-    }
-    Vertex& operator = (Vertex &&move) noexcept {
-        pos = move.pos;
-        tx = move.tx;
-        vec = move.vec;
-        sc = move.sc;
-        return *this;
-    }
-
-    [[nodiscard]] const Coordinate& getPos() const noexcept { return pos; }
-    [[nodiscard]] const TextureCoordinate& getTx() const noexcept { return tx; }
-    [[nodiscard]] const Vector& getVec() const noexcept { return vec; }
-    [[nodiscard]] const ShadingCoefficients& getSc() const noexcept { return sc; }
+    Vertex& operator = (const Vertex &copy) noexcept = default;
+    Vertex& operator = (Vertex &&move) noexcept = default;
 
     ~Vertex() noexcept override = default;
 

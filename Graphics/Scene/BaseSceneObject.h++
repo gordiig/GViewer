@@ -25,6 +25,7 @@ public:
         this->scaleOrigin = scaleOrigin;
         this->angles = angles;
         this->sf = sf;
+        this->material = copy.material->copyShared();
         this->subObjects = {};
 
         return *this;
@@ -35,6 +36,7 @@ public:
         this->scaleOrigin = std::move(scaleOrigin);
         this->angles = std::move(angles);
         this->sf = std::move(sf);
+        this->material = std::move(move.material->copyShared());
         this->subObjects = {};
 
         return *this;
@@ -46,6 +48,8 @@ public:
 
     void turnTo(const AngleSystem &angs) noexcept override { angles = angs; }
     void scale(const ScaleFactor &sf) noexcept override { this->sf = sf; }
+
+    void setMaterial(const std::shared_ptr<IMaterial> &material) noexcept override { this->material = material; }
 
     ~BaseSceneObject() noexcept override = default;
 

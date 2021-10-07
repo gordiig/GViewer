@@ -41,7 +41,7 @@ add_executable(
         Graphics/Screen/IRenderer.h++
         Settings/Settings.h++
         Graphics/Scene/CompositeSceneObject.h++
-        Utils/Containers/Pair.h++ Graphics/Scene/BaseSceneObject.h++)
+        Utils/Containers/Pair.h++ Graphics/Scene/BaseSceneObject.h++ Graphics/Scene/ConcreteObjects/SingleSidePlane.h++ Graphics/Materials/IMaterial.h++ Graphics/Materials/ColorMaterial.h++ Graphics/Scene/ConcreteObjects/Box.h++)
 
 target_link_libraries(GViewer
         PUBLIC
