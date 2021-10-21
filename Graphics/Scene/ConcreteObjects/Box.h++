@@ -97,12 +97,12 @@ public:
                 TX(0.5, 1),
                 TX(0.5, twoThirds));
 
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oXYClosestPlane)));
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oXYDeepestPlane)));
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oXZTopPlane)));
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oXZBottomPlane)));
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oYZLeftPlane)));
-        subObjects.append(std::make_unique<SingleSidePlane>(std::move(oYZRightPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXYClosestPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXYDeepestPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXZTopPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXZBottomPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oYZLeftPlane)));
+        subObjects.append(std::make_shared<SingleSidePlane>(std::move(oYZRightPlane)));
     }
 
     Box(const Box &copy) noexcept = default;
@@ -114,15 +114,6 @@ public:
     [[nodiscard]] double width() const noexcept override { return _width * sf.x; }
     [[nodiscard]] double height() const noexcept override { return _height * sf.y; }
     [[nodiscard]] double depth() const noexcept override { return _depth * sf.z; }
-
-    [[nodiscard]] std::unique_ptr<ISceneObject> copyUnique() const override {
-        Box copy(*this);
-        return std::make_unique<Box>(std::move(copy));
-    }
-    [[nodiscard]] std::shared_ptr<ISceneObject> copyShared() const override {
-        Box copy(*this);
-        return std::make_shared<Box>(std::move(copy));
-    }
 
     ~Box() noexcept override = default;
 

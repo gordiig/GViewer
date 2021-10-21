@@ -18,21 +18,11 @@ protected:
 public:
     Angle() noexcept = default;
 
-    Angle(const Angle &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    Angle(Angle &&move) noexcept { *this = move; }
+    Angle(const Angle &copy) noexcept = default;
+    Angle(Angle &&move) noexcept = default;
 
-    Angle& operator = (const Angle &copy) noexcept {
-        deg = copy.deg;
-        return *this;
-    }
-    Angle& operator = (Angle &&move) noexcept {
-        deg = move.deg;
-        return *this;
-    }
+    Angle& operator = (const Angle &copy) noexcept = default;
+    Angle& operator = (Angle &&move) noexcept = default;
 
     static Angle initDeg(double deg) noexcept {
         Angle ans;
@@ -42,6 +32,12 @@ public:
     static Angle initRad(double rad) noexcept {
         Angle ans;
         ans.setRad(rad);
+        return ans;
+    }
+
+    static Angle initAtan(double angTan) noexcept {
+        double degRad = atan(angTan);
+        Angle ans = Angle::initRad(degRad);
         return ans;
     }
 
@@ -56,7 +52,7 @@ public:
     [[nodiscard]] static double degToRad(double angDeg) noexcept { return M_PI * normalizeDeg(angDeg) / 180; }
     [[nodiscard]] static double radToDeg(double angRad) noexcept { return normalizeDeg(angRad * 180 / M_PI); }
 
-    bool operator == (const Angle &rhs) const noexcept { return fabs(deg - rhs.deg) <= 1e-6; }
+    bool operator == (const Angle &rhs) const noexcept { return doubleEq(deg, rhs.deg); }
     bool operator != (const Angle &rhs) const noexcept { return !(rhs == *this); }
 
     Angle operator + (const Angle &rhs) const noexcept {
@@ -95,7 +91,7 @@ public:
     [[nodiscard]] double cosinus() const noexcept { return cos(getRad()); }
     [[nodiscard]] double tangens() const { return tan(getRad()); }
     [[nodiscard]] double cotangens() const {
-        if (fabs(deg) <= 1e-6)
+        if (doubleEq(deg, 0))
             throw CotangensOfZeroError(EXC_PARAMS);
 
         return 1 / tangens();

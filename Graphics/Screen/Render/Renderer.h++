@@ -6,10 +6,10 @@
 #define GVIEWER_RENDERER_H
 
 #include <sstream>
-#include "../../Utils/BaseObject.h++"
-#include "../../Utils/Containers/DynArray.h++"
-#include "../Scene/ISceneObject.h++"
-#include "../Screen/Screen.h++"
+#include "../../../Utils/BaseObject.h++"
+#include "../../../Utils/Containers/DynArray.h++"
+#include "../../Scene/ISceneObject.h++"
+#include "../Screen.h++"
 #include "IRenderer.h++"
 
 

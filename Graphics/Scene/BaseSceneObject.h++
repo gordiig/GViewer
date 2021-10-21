@@ -12,33 +12,17 @@ class BaseSceneObject: public ISceneObject {
 public:
     BaseSceneObject() noexcept { id = idCounter++; }
 
-    BaseSceneObject(const BaseSceneObject &copy) : BaseSceneObject() {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    BaseSceneObject(BaseSceneObject &&move) noexcept : BaseSceneObject() { *this = std::move(move); }
+    BaseSceneObject(const BaseSceneObject &copy) : ISceneObject(copy) { id = idCounter++; }
+    BaseSceneObject(BaseSceneObject &&move)  noexcept : ISceneObject(move) { id = idCounter++; }
 
     BaseSceneObject& operator = (const BaseSceneObject &copy) noexcept {
-        this->origin = origin;
-        this->turnOrigin = turnOrigin;
-        this->scaleOrigin = scaleOrigin;
-        this->angles = angles;
-        this->sf = sf;
-        this->material = copy.material->copyShared();
-        this->subObjects = {};
-
+        ISceneObject::operator=(copy);
+        id = idCounter++;
         return *this;
     }
     BaseSceneObject& operator = (BaseSceneObject &&move) noexcept {
-        this->origin = std::move(origin);
-        this->turnOrigin = std::move(turnOrigin);
-        this->scaleOrigin = std::move(scaleOrigin);
-        this->angles = std::move(angles);
-        this->sf = std::move(sf);
-        this->material = std::move(move.material->copyShared());
-        this->subObjects = {};
-
+        ISceneObject::operator=(move);
+        id = idCounter++;
         return *this;
     }
 

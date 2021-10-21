@@ -10,15 +10,14 @@
 #include <ostream>
 
 class BaseObject {
+protected:
+    [[nodiscard]] bool doubleEq(double x, double y, double eps = 1e-6) const noexcept { return abs(x - y) <= eps; }
+
 public:
     // typeid.name() может вообще давать что угодно, но имя класса можно разглядеть
     [[nodiscard]] std::string getClassName() const { return typeid(*this).name(); }
 
-    [[nodiscard]] virtual std::string toString() const {
-        std::stringstream sstream;
-        sstream << getClassName() << " [" << this << ']';
-        return sstream.str();
-    }
+    [[nodiscard]] virtual std::string toString() const = 0;
 
     [[nodiscard]] bool isIdenticTo(const BaseObject &val) const { return this == &val; }
 

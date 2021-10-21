@@ -63,10 +63,8 @@ public:
         _height = p1.height() + p2.height();
         _depth = p1.depth() + p2.depth();
 
-        std::unique_ptr<ISceneObject> p1Ptr = std::make_unique<Polygon>(Polygon(p1));
-        std::unique_ptr<ISceneObject> p2Ptr = std::make_unique<Polygon>(Polygon(p2));
-        subObjects.append(std::move(p1Ptr));
-        subObjects.append(std::move(p2Ptr));
+        subObjects.append(std::make_shared<Polygon>(p1));
+        subObjects.append(std::make_shared<Polygon>(p2));
     }
 
     static SingleSidePlane oXY(const Coordinate &leftTop_, double width, double height, bool positiveNorm = true) noexcept {
@@ -141,15 +139,6 @@ public:
     [[nodiscard]] double width() const noexcept override { return _width * sf.x; }
     [[nodiscard]] double height() const noexcept override { return _height * sf.y; }
     [[nodiscard]] double depth() const noexcept override { return _depth * sf.z; }
-
-    [[nodiscard]] std::unique_ptr<ISceneObject> copyUnique() const override {
-        SingleSidePlane newObj = *this;
-        return std::make_unique<SingleSidePlane>(std::move(newObj));
-    }
-    [[nodiscard]] std::shared_ptr<ISceneObject> copyShared() const override {
-        SingleSidePlane newObj = *this;
-        return std::make_shared<SingleSidePlane>(std::move(newObj));
-    }
 
     ~SingleSidePlane() noexcept override = default;
 

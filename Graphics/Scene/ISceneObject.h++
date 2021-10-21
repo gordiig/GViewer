@@ -14,6 +14,8 @@
 #include "../../Graphics/Materials/IMaterial.h++"
 
 class ISceneObject: public BaseObject {
+    friend class CompositeSceneObject;
+
 protected:
     Coordinate origin;
     Coordinate turnOrigin;
@@ -24,12 +26,15 @@ protected:
 
     std::shared_ptr<IMaterial> material;
 
-    DynArray<std::unique_ptr<ISceneObject>> subObjects;
+    DynArray<std::shared_ptr<ISceneObject>> subObjects;
 
     static unsigned long long idCounter;
     unsigned long long id;
+
+    virtual void setKa(double ka) = 0;
+
 public:
-    [[nodiscard]] virtual const Coordinate& getOrigin() const noexcept { return origin; }
+    [[nodiscard]] virtual const Coordinate &getOrigin() const noexcept { return origin; }
     [[nodiscard]] virtual const Coordinate &getTurnOrigin() const noexcept { return turnOrigin; }
     [[nodiscard]] virtual const Coordinate &getScaleOrigin() const noexcept { return scaleOrigin; }
 
@@ -37,8 +42,9 @@ public:
     [[nodiscard]] virtual const ScaleFactor& getSf() const { return sf; }
 
     [[nodiscard]] virtual const IMaterial& getMaterial() const { return *material; }
+    [[nodiscard]] virtual const std::shared_ptr<IMaterial>& getMaterialPtr() const { return material; }
 
-    [[nodiscard]] virtual const DynArray<std::unique_ptr<ISceneObject>>& getSubObjects() const noexcept {
+    [[nodiscard]] virtual const DynArray<std::shared_ptr<ISceneObject>>& getSubObjects() const noexcept {
         return subObjects;
     }
 
@@ -54,16 +60,11 @@ public:
 
     virtual void setMaterial (const std::shared_ptr<IMaterial> &material) noexcept = 0;
 
-    [[nodiscard]] virtual Vector norm() const noexcept = 0;
-
     [[nodiscard]] virtual double width() const noexcept = 0;
     [[nodiscard]] virtual double height() const noexcept = 0;
     [[nodiscard]] virtual double depth() const noexcept = 0;
 
     virtual void setToRender() const = 0;
-
-    [[nodiscard]] virtual std::unique_ptr<ISceneObject> copyUnique() const = 0;
-    [[nodiscard]] virtual std::shared_ptr<ISceneObject> copyShared() const = 0;
 
     ~ISceneObject() noexcept override = default;
 

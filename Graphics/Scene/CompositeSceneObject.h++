@@ -16,46 +16,25 @@
 
 class CompositeSceneObject: public ISceneObject {
 protected:
-    [[nodiscard]] DynArray<std::unique_ptr<ISceneObject>> copySubObjs() const {
-        DynArray<std::unique_ptr<ISceneObject>> newVec;
-        newVec.reserve(subObjects.count());
-
-        for (auto &obj : subObjects)
-            newVec.append(obj->copyUnique());
-
-        return newVec;
+    void setKa(double ka) override {
+        for (auto& subObj : subObjects)
+            subObj->setKa(ka);
     }
 
 public:
     CompositeSceneObject() noexcept { id = idCounter++; }
 
-    CompositeSceneObject(const CompositeSceneObject &copy) : CompositeSceneObject() {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    CompositeSceneObject(CompositeSceneObject &&copy) noexcept : CompositeSceneObject() { *this = copy; }
+    CompositeSceneObject(const CompositeSceneObject &copy) : ISceneObject(copy) { id = idCounter++; }
+    CompositeSceneObject(CompositeSceneObject &&move) noexcept : ISceneObject(move) { id = idCounter++; }
 
     CompositeSceneObject& operator = (const CompositeSceneObject &copy) {
-        this->origin = origin;
-        this->turnOrigin = turnOrigin;
-        this->scaleOrigin = scaleOrigin;
-        this->angles = angles;
-        this->sf = sf;
-        this->material = copy.material->copyShared();
-        this->subObjects = std::move(copy.copySubObjs());
-
+        ISceneObject::operator=(copy);
+        id = idCounter++;
         return *this;
     }
     CompositeSceneObject& operator = (CompositeSceneObject &&move) noexcept {
-        this->origin = std::move(origin);
-        this->turnOrigin = std::move(turnOrigin);
-        this->scaleOrigin = std::move(scaleOrigin);
-        this->angles = std::move(angles);
-        this->sf = std::move(sf);
-        this->material = std::move(move.material->copyShared());
-        this->subObjects = std::move(move.copySubObjs());
-
+        ISceneObject::operator=(move);
+        id = idCounter++;
         return *this;
     }
 
@@ -101,13 +80,6 @@ public:
             obj->scale(sf);
     }
 
-    [[nodiscard]] Vector norm() const noexcept override {
-        Vector ans;
-        for (const auto &obj : subObjects)
-            ans += obj->norm();
-        ans /= (double) subObjects.count();
-        return ans;
-    }
 
     void setMaterial(const std::shared_ptr<IMaterial> &material) noexcept override {
         this->material = material;

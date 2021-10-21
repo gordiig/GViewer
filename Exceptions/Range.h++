@@ -14,6 +14,8 @@ public:
         Exception(__EXC_PARAMS__, exc.what()) {}
 
     ~IndexError() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[IndexError]"; }
 };
 
 class NotFoundInCollectionError: public Exception {
@@ -25,6 +27,8 @@ public:
         Exception(__EXC_PARAMS__, msg) {}
 
     ~NotFoundInCollectionError() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[NotFoundInCollectionError]"; }
 };
 
 #endif //GVIEWER_RANGE_H

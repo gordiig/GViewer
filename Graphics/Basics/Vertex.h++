@@ -15,22 +15,32 @@
 #include "../../Utils/BaseObject.h++"
 
 
-struct Vertex: public BaseObject {
-    Coordinate pos;
+template <typename T>
+struct Vertex_: public BaseObject {
+    T pos;
     TextureCoordinate tx;
     Vector vec;
     ShadingCoefficients sc;
 
-    Vertex(Coordinate pos, TextureCoordinate tx, Vector vec, ShadingCoefficients sc) :
+    Vertex_(T pos, TextureCoordinate tx, Vector vec, ShadingCoefficients sc) :
         pos(std::move(pos)), tx(std::move(tx)), vec(std::move(vec)), sc(std::move(sc)) {}
 
-    Vertex(const Vertex &copy) noexcept = default;
-    Vertex(Vertex &&move) noexcept = default;
+    static Vertex_ zero() noexcept {
+        return {
+            T(0, 0, 0),
+            TextureCoordinate(0, 0),
+            Vector(0, 0, 0),
+            ShadingCoefficients(0, 0)
+        };
+    }
 
-    Vertex& operator = (const Vertex &copy) noexcept = default;
-    Vertex& operator = (Vertex &&move) noexcept = default;
+    Vertex_(const Vertex_ &copy) noexcept = default;
+    Vertex_(Vertex_ &&move) noexcept = default;
 
-    ~Vertex() noexcept override = default;
+    Vertex_& operator = (const Vertex_ &copy) noexcept = default;
+    Vertex_& operator = (Vertex_ &&move) noexcept = default;
+
+    ~Vertex_() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
@@ -42,6 +52,9 @@ struct Vertex: public BaseObject {
         return sst.str();
     }
 };
+
+using Vertex = Vertex_<Coordinate>;
+using ScreenVertex = Vertex_<ScreenCoordinate>;
 
 
 #endif //GVIEWER_VERTEX_H

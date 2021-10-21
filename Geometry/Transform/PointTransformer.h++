@@ -37,11 +37,9 @@ public:
     static void turn(Coordinate &c, const AngleSystem &as, const Coordinate &around = Coordinate::zero()) noexcept {
         /*
          * Для двухмерной точки:
-         *             [                 ]
          *   t    t    [  cos(a) -sin(a) ]           t
          * X'  = X   + [                 ] * (X - X )
          *        0    [  sin(a)  cos(a) ]         0
-         *             [                 ]
          */
         double oldX, oldY;
 

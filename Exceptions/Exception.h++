@@ -36,19 +36,25 @@ public:
     Exception(__EXC_ARGS__, std::string msg) noexcept :
         file(file), line(line), message(std::move(msg)), fullMessage(getFullMessage()) {}
 
+    [[nodiscard]] const char *what() const noexcept override { return fullMessage.c_str(); }
+
     ~Exception() noexcept override = default;
 
-    [[nodiscard]] const char *what() const noexcept override { return fullMessage.c_str(); }
+    [[nodiscard]] std::string toString() const override { return "[Exception]"; }
 };
 
 
 class BadArgumentError: public Exception {
 public:
     BadArgumentError(__EXC_ARGS__) noexcept:
-            Exception(__EXC_PARAMS__, "Bad argument was passed") {}
+            Exception(__EXC_PARAMS__, "Bad argument was passed") {
+    }
 
     BadArgumentError(__EXC_ARGS__, const std::string &msg) noexcept :
-            Exception(__EXC_PARAMS__, msg) {}
+            Exception(__EXC_PARAMS__, msg) {
+    }
+
+    [[nodiscard]] std::string toString() const override { return "[BadArgumentException]"; }
 
     ~BadArgumentError() noexcept override = default;
 };

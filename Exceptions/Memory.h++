@@ -14,6 +14,8 @@ public:
         Exception(__EXC_PARAMS__, allocException.what()) {}
 
     ~BadAllocException() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[BadAllocException]"; }
 };
 
 #endif //GVIEWER_MEMORY_H

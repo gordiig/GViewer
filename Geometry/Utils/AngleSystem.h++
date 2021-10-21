@@ -41,6 +41,11 @@ struct AngleSystem: public BaseObject {
         return *this;
     }
 
+    AngleSystem operator - () const noexcept {
+        AngleSystem ans(-xAxis, -yAxis, -zAxis);
+        return ans;
+    }
+
     ~AngleSystem() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override {

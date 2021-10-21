@@ -12,12 +12,16 @@
 class DivideByZeroError : public Exception {
 public:
     DivideByZeroError(__EXC_ARGS__) noexcept :
-            Exception(__EXC_PARAMS__, "Trying to divide by zero!") {}
+            Exception(__EXC_PARAMS__, "Trying to divide by zero!") {
+    }
 
     DivideByZeroError(__EXC_ARGS__, const std::string &msg) noexcept :
-        Exception(__EXC_PARAMS__, msg) {}
+        Exception(__EXC_PARAMS__, msg) {
+    }
 
     ~DivideByZeroError() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[DivideByZeroError]"; }
 };
 
 
@@ -30,6 +34,22 @@ public:
             Exception(__EXC_PARAMS__, msg) {}
 
     ~CotangensOfZeroError() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[CotangensOfZeroError]"; }
 };
+
+class InterpolationError : public Exception {
+public:
+    InterpolationError(__EXC_ARGS__) noexcept :
+            Exception(__EXC_PARAMS__, "Wrong basevalue given to interpolator!") {}
+
+    InterpolationError(__EXC_ARGS__, const std::string &msg) noexcept :
+            Exception(__EXC_PARAMS__, msg) {}
+
+    ~InterpolationError() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[InterpolationError]"; }
+};
+
 
 #endif //GVIEWER_MATH_H

@@ -13,6 +13,7 @@
 #include "Geometry/Basics/Point3.h++"
 #include "Geometry/Basics/Angle.h++"
 #include "Geometry/Basics/Vector.h++"
+
 #include "Geometry/Transform/PointTransformer.h++"
 
 #include "Graphics/Basics/ShadingCoefficients.h++"
@@ -23,28 +24,48 @@
 #include "Graphics/Scene/ISceneObject.h++"
 #include "Graphics/Scene/CompositeSceneObject.h++"
 #include "Graphics/Scene/BaseSceneObject.h++"
+
 #include "Graphics/Scene/ConcreteObjects/SingleSidePlane.h++"
 #include "Graphics/Scene/ConcreteObjects/Box.h++"
 
+#include "Graphics/Scene/ConcreteObjects/Lights/ILight.h++"
+#include "Graphics/Scene/ConcreteObjects/Lights/DotLight.h++"
+#include "Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++"
+
+#include "Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++"
+
 #include "Graphics/Screen/Screen.h++"
-#include "Graphics/Screen/IRenderer.h++"
-#include "Graphics/Screen/Renderer.h++"
+#include "Graphics/Screen/CameraPyramid.h++"
+
+#include "Graphics/Screen/Render/IRenderer.h++"
+#include "Graphics/Screen/Render/Renderer.h++"
+
+#include "Graphics/Screen/Render/RenderableObjects/IRenderable.h++"
+
+#include "Graphics/Screen/Render/RenderableObjects/3D/RenderablePolygon.h++"
+#include "Graphics/Screen/Render/RenderableObjects/3D/Renderable3DObject.h++"
+
+#include "Graphics/Screen/Render/RenderableObjects/Lights/IRenderableLight.h++"
+#include "Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++"
+
+#include "Graphics/Screen/Render/Shaders/IShader.h++"
+#include "Graphics/Screen/Render/Shaders/LambertShader.h++"
+#include "Graphics/Screen/Render/Shaders/GouraudShader.h++"
+#include "Graphics/Screen/Render/Shaders/PhongShader.h++"
 
 #include "Graphics/Materials/IMaterial.h++"
 #include "Graphics/Materials/ColorMaterial.h++"
+
+#include "Utils/Interpolator.h++"
+#include "Utils/LineInterpolator.h++"
 
 #include "Utils/Containers/DynArray.h++"
 #include "Utils/Containers/Matrix.h++"
 #include "Utils/Containers/Pair.h++"
 
 
+
 int main(int argc, char *argv[]) {
-
-//    DynArray<std::unique_ptr<ISceneObject>> vec;
-//    auto c = CompositeSceneObject();
-//    std::unique_ptr<ISceneObject> p = std::unique_ptr<CompositeSceneObject>(new CompositeSceneObject());
-//    vec.append(std::move(p));
-
 
     return 0;
 

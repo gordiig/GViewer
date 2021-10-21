@@ -7,11 +7,11 @@
 
 
 #include <sstream>
-#include <utility>
 #include "../../Settings/Settings.h++"
 #include "../../Utils/BaseObject.h++"
-#include "../Scene/BaseSceneObject.h++"
 #include "../../Geometry/Basics/Vector.h++"
+#include "../Screen/Render/IRenderer.h++"
+#include "../Scene/BaseSceneObject.h++"
 #include "Vertex.h++"
 
 
@@ -50,6 +50,12 @@ protected:
         return {minX, minY, minZ};
     }
 
+    void setKa(double ka) override {
+        v1.sc.setKa(ka);
+        v2.sc.setKa(ka);
+        v3.sc.setKa(ka);
+    }
+
 public:
     Polygon() = delete;
     Polygon(Vertex v1, Vertex v2, Vertex v3) :
@@ -78,20 +84,6 @@ public:
     [[nodiscard]] const Vertex& getV2() const noexcept { return v2; }
     [[nodiscard]] const Vertex& getV3() const noexcept { return v3; }
 
-    [[nodiscard]] std::unique_ptr<ISceneObject> copyUnique() const override {
-        Polygon newPoly = *this;
-        return std::make_unique<Polygon>(std::move(newPoly));
-    }
-    [[nodiscard]] std::shared_ptr<ISceneObject> copyShared() const override {
-        Polygon newPoly = *this;
-        return std::make_shared<Polygon>(std::move(newPoly));
-    }
-
-    [[nodiscard]] Vector norm() const noexcept override {
-        Vector ans = (v1.vec + v2.vec + v3.vec) / 3.0;
-        return ans;
-    }
-
     [[nodiscard]] double width() const noexcept override { return _width * sf.x; }
     [[nodiscard]] double height() const noexcept override { return _height * sf.y; }
     [[nodiscard]] double depth() const noexcept override { return _depth * sf.z; }
@@ -100,9 +92,7 @@ public:
         Settings& s = Settings::getInstance();
         IRenderer& renderer = s.getRenderer();
 
-        Polygon newPoly = *this;
-        std::unique_ptr<ISceneObject> newP = std::make_unique<Polygon>(std::move(newPoly));
-        renderer.addToRender(std::move(newP));
+        // TODO
     }
 
     ~Polygon() noexcept override = default;

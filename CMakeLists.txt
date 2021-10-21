@@ -37,11 +37,21 @@ add_executable(
         Exceptions/Graphics.h++
         Graphics/Basics/Polygon.h++
         Geometry/Transform/PointTransformer.h++
-        Graphics/Screen/Renderer.h++
-        Graphics/Screen/IRenderer.h++
+        Graphics/Screen/Render/Renderer.h++
+        Graphics/Screen/Render/IRenderer.h++
         Settings/Settings.h++
         Graphics/Scene/CompositeSceneObject.h++
-        Utils/Containers/Pair.h++ Graphics/Scene/BaseSceneObject.h++ Graphics/Scene/ConcreteObjects/SingleSidePlane.h++ Graphics/Materials/IMaterial.h++ Graphics/Materials/ColorMaterial.h++ Graphics/Scene/ConcreteObjects/Box.h++)
+        Utils/Containers/Pair.h++
+        Graphics/Scene/BaseSceneObject.h++
+        Graphics/Scene/ConcreteObjects/SingleSidePlane.h++
+        Graphics/Materials/IMaterial.h++
+        Graphics/Materials/ColorMaterial.h++
+        Graphics/Scene/ConcreteObjects/Box.h++
+        Graphics/Scene/ConcreteObjects/Lights/DotLight.h++
+        Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++
+        Graphics/Scene/ConcreteObjects/Lights/ILight.h++
+        Graphics/Screen/Render/RenderableObjects/IRenderable.h++
+        Graphics/Screen/Render/RenderableObjects/3D/RenderablePolygon.h++ Graphics/Screen/Render/Shaders/IShader.h++ Utils/Interpolator.h++ Utils/LineInterpolator.h++ Graphics/Screen/CameraPyramid.h++ Graphics/Screen/Render/Shaders/LambertShader.h++ Graphics/Screen/Render/Shaders/GouraudShader.h++ Graphics/Screen/Render/Shaders/PhongShader.h++ Graphics/Screen/Render/RenderableObjects/Lights/IRenderableLight.h++ Graphics/Screen/Render/RenderableObjects/3D/Renderable3DObject.h++ Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++ Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++ Graphics/Screen/Render/RenderableObjects/Lights/RenderableAmbientLight.h++)
 
 target_link_libraries(GViewer
         PUBLIC

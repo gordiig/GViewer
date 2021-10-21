@@ -6,42 +6,51 @@
 #define GVIEWER_SHADINGCOEFFICIENTS_H
 
 #include <sstream>
+#include "../../Exceptions/Exception.h++"
 #include "../../Utils/BaseObject.h++"
 
-struct ShadingCoefficients: public BaseObject {
+class ShadingCoefficients: public BaseObject {
+protected:
     double kd = 0;
     double ka = 0;
 
-    explicit ShadingCoefficients(double kd = 0, double ka = 0) noexcept : kd(kd), ka(ka) {}
+public:
+    explicit ShadingCoefficients(double kd = 0, double ka = 0) {
+        setKd(kd);
+        setKa(ka);
+    }
 
-    ShadingCoefficients(const ShadingCoefficients &sc) noexcept {
-        if (this == &sc)
-            return;
-        *this = sc;
-    }
-    ShadingCoefficients(ShadingCoefficients &&sc) noexcept { *this = sc; }
+    ShadingCoefficients(const ShadingCoefficients &sc) noexcept  = default;
+    ShadingCoefficients(ShadingCoefficients &&sc) noexcept = default;
 
-    ShadingCoefficients& operator = (const ShadingCoefficients &sc) noexcept {
-        kd = sc.kd;
-        ka = sc.ka;
-        return *this;
-    }
-    ShadingCoefficients& operator = (ShadingCoefficients &&sc) noexcept {
-        kd = sc.kd;
-        ka = sc.ka;
-        return *this;
-    }
+    ShadingCoefficients& operator = (const ShadingCoefficients &sc) = default;
+    ShadingCoefficients& operator = (ShadingCoefficients &&sc) noexcept = default;
 
     ~ShadingCoefficients() noexcept override = default;
 
-    bool operator == (const ShadingCoefficients &rhs) const { return kd == rhs.kd && ka == rhs.ka; }
+    bool operator == (const ShadingCoefficients &rhs) const { return doubleEq(ka, rhs.ka) && doubleEq(kd, rhs.kd); }
     bool operator != (const ShadingCoefficients &rhs) const { return !(rhs == *this); }
+
+    [[nodiscard]] double getKd() const { return kd; }
+    [[nodiscard]] double getKa() const { return ka; }
+
+    void setKd(double kd) {
+        if (kd < 0 || kd > 1)
+            throw BadArgumentError(EXC_PARAMS, "Kd must be in [0, 1] range");
+        this->kd = kd;
+    }
+    void setKa(double ka) {
+        if (ka < 0 || ka > 1)
+            throw BadArgumentError(EXC_PARAMS, "Ka must be in [0, 1] range");
+        this->ka = ka;
+    }
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
         sst << "[kd = " << kd << ", ka = " << ka << ']';
         return sst.str();
     }
+
 };
 
 #endif //GVIEWER_SHADINGCOEFFICIENTS_H
