@@ -22,21 +22,13 @@ protected:
     }
 
 public:
-    CompositeSceneObject() noexcept { id = idCounter++; }
+    CompositeSceneObject() : ISceneObject() { }
 
-    CompositeSceneObject(const CompositeSceneObject &copy) : ISceneObject(copy) { id = idCounter++; }
-    CompositeSceneObject(CompositeSceneObject &&move) noexcept : ISceneObject(move) { id = idCounter++; }
+    CompositeSceneObject(const CompositeSceneObject &copy) = default;
+    CompositeSceneObject(CompositeSceneObject &&move) noexcept = default;
 
-    CompositeSceneObject& operator = (const CompositeSceneObject &copy) {
-        ISceneObject::operator=(copy);
-        id = idCounter++;
-        return *this;
-    }
-    CompositeSceneObject& operator = (CompositeSceneObject &&move) noexcept {
-        ISceneObject::operator=(move);
-        id = idCounter++;
-        return *this;
-    }
+    CompositeSceneObject& operator = (const CompositeSceneObject &copy) = default;
+    CompositeSceneObject& operator = (CompositeSceneObject &&move) noexcept = default;
 
     void setOrigin(const Coordinate &coord) noexcept override {
         Coordinate coordForSubobj;

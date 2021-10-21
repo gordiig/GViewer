@@ -10,21 +10,13 @@
 
 class BaseSceneObject: public ISceneObject {
 public:
-    BaseSceneObject() noexcept { id = idCounter++; }
+    BaseSceneObject() : ISceneObject() {}
 
-    BaseSceneObject(const BaseSceneObject &copy) : ISceneObject(copy) { id = idCounter++; }
-    BaseSceneObject(BaseSceneObject &&move)  noexcept : ISceneObject(move) { id = idCounter++; }
+    BaseSceneObject(const BaseSceneObject &copy) = default;
+    BaseSceneObject(BaseSceneObject &&move) noexcept = default;
 
-    BaseSceneObject& operator = (const BaseSceneObject &copy) noexcept {
-        ISceneObject::operator=(copy);
-        id = idCounter++;
-        return *this;
-    }
-    BaseSceneObject& operator = (BaseSceneObject &&move) noexcept {
-        ISceneObject::operator=(move);
-        id = idCounter++;
-        return *this;
-    }
+    BaseSceneObject& operator = (const BaseSceneObject &copy) = default;
+    BaseSceneObject& operator = (BaseSceneObject &&move) noexcept = default;
 
     void setOrigin(const Coordinate &coord) noexcept override { origin = coord; }
     void setTurnOrigin(const Coordinate &turnOrigin) noexcept override { this->turnOrigin = turnOrigin; }

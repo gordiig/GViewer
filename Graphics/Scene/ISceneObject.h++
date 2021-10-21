@@ -34,6 +34,14 @@ protected:
     virtual void setKa(double ka) = 0;
 
 public:
+    ISceneObject() { id = idCounter++; }
+
+    ISceneObject(const ISceneObject &copy) = default;
+    ISceneObject(ISceneObject &&move) noexcept = default;
+
+    ISceneObject& operator = (const ISceneObject &copy) = default;
+    ISceneObject& operator = (ISceneObject &&move) noexcept = default;
+
     [[nodiscard]] virtual const Coordinate &getOrigin() const noexcept { return origin; }
     [[nodiscard]] virtual const Coordinate &getTurnOrigin() const noexcept { return turnOrigin; }
     [[nodiscard]] virtual const Coordinate &getScaleOrigin() const noexcept { return scaleOrigin; }
