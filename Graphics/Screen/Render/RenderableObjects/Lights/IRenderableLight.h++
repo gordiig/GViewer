@@ -16,8 +16,6 @@ class ICamera;
 
 class IRenderableLight: public IRenderable {
 protected:
-    const static unsigned short MAX_INTENSITY;
-
     Coordinate lightPosition;
     unsigned short lightIntensity;
 
@@ -29,6 +27,8 @@ protected:
     Screen drawObject() override { return {0, 0, {0, 0}}; }
 
 public:
+    const static unsigned short MAX_INTENSITY;
+
     IRenderableLight(const ILight &light, std::shared_ptr<ICamera> &camera) noexcept :
             IRenderable(camera), lightPosition(light.getOrigin()), lightIntensity(light.getIntensity()) {
         PointTransformer::turn(lightPosition, light.getAngles(), light.getTurnOrigin());
@@ -40,7 +40,7 @@ public:
     IRenderableLight& operator = (const IRenderableLight &copy) noexcept = default;
     IRenderableLight& operator = (IRenderableLight &&move) noexcept = default;
 
-    virtual unsigned short getIntensity(const Vector &norm, const Vertex &vertex) = 0;
+    virtual unsigned short getIntensity(const Vertex &vertex) = 0;
 
     // Do not draw lights yet
     Screen render() override { return {0, 0, {0, 0}}; }

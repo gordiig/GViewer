@@ -24,7 +24,10 @@ public:
     ColorMaterial& operator = (const ColorMaterial &copy) noexcept = default;
     ColorMaterial& operator = (ColorMaterial &&move) noexcept = default;
 
-    [[nodiscard]] const RGBA &getColor(double x, double y) const override { return color; }
+    [[nodiscard]] RGBA getColor(double x, double y, size_t intensity) const override {
+        RGBA ansColor = color.applyIntensity(intensity);
+        return color;
+    }
 
     [[nodiscard]] std::shared_ptr<IMaterial> copyShared() const override {
         ColorMaterial copy = *this;

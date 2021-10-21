@@ -49,7 +49,7 @@ public:
 
         double t;
         if (baseline.first.x == baseline.second.x)
-            t = 0.5;
+            t = (interpolateCorners.first.x + interpolateCorners.second.x) / 2;
         else
             t = (pt.x - baseline.first.x) / (baseline.second.x - baseline.first.x);
 
@@ -69,7 +69,7 @@ public:
 
         double t;
         if (baseline.first.y == baseline.second.y)
-            t = 0.5;
+            t = (interpolateCorners.first.y + interpolateCorners.second.y) / 2;
         else
             t = (pt.y - baseline.first.y) / (baseline.second.y - baseline.first.y);
 

@@ -12,7 +12,7 @@
 
 class IMaterial: public BaseObject {
 public:
-    [[nodiscard]] virtual const RGBA& getColor(double x, double y) const = 0;
+    [[nodiscard]] virtual RGBA getColor(double x, double y, size_t intensity) const = 0;
 
     ~IMaterial() noexcept override = default;
 

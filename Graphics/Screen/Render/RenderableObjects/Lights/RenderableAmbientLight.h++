@@ -22,7 +22,7 @@ public:
     RenderableAmbientLight& operator = (const RenderableAmbientLight &copy) noexcept = default;
     RenderableAmbientLight& operator = (RenderableAmbientLight &&move) noexcept = default;
 
-    unsigned short getIntensity(const Vector &norm, const Vertex &vertex) override {
+    unsigned short getIntensity(const Vertex &vertex) override {
         // Initializing some variables for later
         unsigned short ans;
         double ka = vertex.sc.getKa();

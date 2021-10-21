@@ -91,6 +91,19 @@ public:
     }
     [[nodiscard]] RGBA blendThisBelow(const RGBA &rhs) const noexcept { return rhs.blendThisAbove(*this); }
 
+    [[nodiscard]] RGBA applyIntensity(const size_t intensity, const bool applyForAlpha = false) const noexcept {
+        RGBA ans;
+        const auto& doubleIntensity = (double) intensity;
+        const double intensityMultiplier = 255.0 / doubleIntensity;
+
+        ans.r = (int) ((double) r * intensityMultiplier);
+        ans.g = (int) ((double) g * intensityMultiplier);
+        ans.b = (int) ((double) b * intensityMultiplier);
+        ans.a = applyForAlpha ? (int) ((double) a * intensityMultiplier) : a;
+
+        return ans;
+    }
+
     [[nodiscard]] bool isTransparent() const noexcept { return a == 1; }
     [[nodiscard]] bool isKindaTransparent() const noexcept { return a > 0; }
     [[nodiscard]] bool isOpaque() const noexcept { return a == 0; }

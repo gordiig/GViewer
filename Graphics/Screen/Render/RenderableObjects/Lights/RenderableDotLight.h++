@@ -22,7 +22,7 @@ public:
     RenderableDotLight& operator = (const RenderableDotLight &copy) noexcept = default;
     RenderableDotLight& operator = (RenderableDotLight &&move) noexcept = default;
 
-    unsigned short getIntensity(const Vector &norm, const Vertex &vertex) override {
+    unsigned short getIntensity(const Vertex &vertex) override {
         // Initializing some variables for later
         unsigned short ans;
         double cosForDiffuse;
@@ -33,7 +33,7 @@ public:
         Vector vtxToLightVector(vertex.pos, lightPosition);
 
         // Calculating cos between norm and prev vector
-        cosForDiffuse = vtxToLightVector.cosBetweenVectors(norm);
+        cosForDiffuse = vtxToLightVector.cosBetweenVectors(vertex.vec);
 
         // Calculating diffuse light
         diffuse = cosForDiffuse * kd;
