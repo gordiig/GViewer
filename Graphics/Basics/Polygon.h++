@@ -5,14 +5,10 @@
 #ifndef GVIEWER_POLYGON_H
 #define GVIEWER_POLYGON_H
 
-
-#include <sstream>
-#include "../../Settings/Settings.h++"
-#include "../../Utils/BaseObject.h++"
-#include "../../Geometry/Basics/Vector.h++"
+#include "Vertex.h++"
 #include "../Screen/Render/IRenderer.h++"
 #include "../Scene/BaseSceneObject.h++"
-#include "Vertex.h++"
+#include "../../Settings/Settings.h++"
 
 
 class Polygon: public BaseSceneObject {
@@ -21,11 +17,11 @@ protected:
     Vertex v2;
     Vertex v3;
 
-    double _width;
-    double _height;
-    double _depth;
+    [[nodiscard]] Coordinate maxCoord() const noexcept {
+        const auto& c1 = v1.pos;
+        const auto& c2 = v2.pos;
+        const auto& c3 = v3.pos;
 
-    [[nodiscard]] Coordinate maxCoord(const Coordinate &c1, const Coordinate &c2, const Coordinate &c3) const noexcept {
         double tmp = std::max(c1.x, c2.x);
         double maxX = std::max(tmp, c3.x);
 
@@ -37,7 +33,11 @@ protected:
 
         return {maxX, maxY, maxZ};
     }
-    [[nodiscard]] Coordinate minCoord(const Coordinate &c1, const Coordinate &c2, const Coordinate &c3) const noexcept {
+    [[nodiscard]] Coordinate minCoord() const noexcept {
+        const auto& c1 = v1.pos;
+        const auto& c2 = v2.pos;
+        const auto& c3 = v3.pos;
+
         double tmp = std::min(c1.x, c2.x);
         double minX = std::min(tmp, c3.x);
 
@@ -58,16 +58,10 @@ protected:
 
 public:
     Polygon() = delete;
+
     Polygon(Vertex v1, Vertex v2, Vertex v3) :
-        BaseSceneObject(), v1(std::move(v1)), v2(std::move(v2)), v3(std::move(v3)) {
+            BaseSceneObject(), v1(std::move(v1)), v2(std::move(v2)), v3(std::move(v3)) {
         origin = turnOrigin = scaleOrigin = (v1.pos + v2.pos + v3.pos) / 3.0;
-
-        Coordinate maxC = maxCoord(v1.pos, v2.pos, v3.pos);
-        Coordinate minC = minCoord(v1.pos, v2.pos, v3.pos);
-
-        _width = abs(maxC.x - minC.x);
-        _height = abs(maxC.y - minC.y);
-        _depth = abs(maxC.z - minC.z);
     }
 
     Polygon(const Polygon &copy) = default;
@@ -84,16 +78,11 @@ public:
     [[nodiscard]] const Vertex& getV2() const noexcept { return v2; }
     [[nodiscard]] const Vertex& getV3() const noexcept { return v3; }
 
-    [[nodiscard]] double width() const noexcept override { return _width * sf.x; }
-    [[nodiscard]] double height() const noexcept override { return _height * sf.y; }
-    [[nodiscard]] double depth() const noexcept override { return _depth * sf.z; }
+    [[nodiscard]] double width() const noexcept override { return abs(maxCoord().x - minCoord().x) * sf.x; }
+    [[nodiscard]] double height() const noexcept override { return abs(maxCoord().y - minCoord().y) * sf.y; }
+    [[nodiscard]] double depth() const noexcept override { return abs(maxCoord().z - minCoord().z) * sf.z; }
 
-    void setToRender() const override {
-        Settings& s = Settings::getInstance();
-        IRenderer& renderer = s.getRenderer();
-
-        // TODO
-    }
+    void setToRender() const override;
 
     ~Polygon() noexcept override = default;
 

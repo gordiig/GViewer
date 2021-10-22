@@ -5,9 +5,7 @@
 #ifndef GVIEWER_ILIGHT_H
 #define GVIEWER_ILIGHT_H
 
-#include <sstream>
 #include "../../BaseSceneObject.h++"
-#include "../../../Screen/Render/IRenderer.h++"
 #include "../../../../Exceptions/Exception.h++"
 #include "../../../../Graphics/Basics/Vertex.h++"
 

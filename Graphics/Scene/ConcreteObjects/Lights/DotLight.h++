@@ -5,10 +5,8 @@
 #ifndef GVIEWER_DOTLIGHT_H
 #define GVIEWER_DOTLIGHT_H
 
-#include <sstream>
-#include "../../../../Settings/Settings.h++"
-#include "../../../Screen/Render/IRenderer.h++"
 #include "ILight.h++"
+
 
 // TURN_POSITION НУЖНО ОТДЕЛЬНЫМ ОТ ПОЗОШН ДЕЛАТЬ (0, 0, 0) — иначе крутиться вокруг себя будет — а это нам не надо
 class DotLight: public ILight {
@@ -21,12 +19,7 @@ public:
     DotLight& operator = (const DotLight &copy) noexcept = default;
     DotLight& operator = (DotLight &&move) noexcept = default;
 
-    void setToRender() const override {
-        Settings& s = Settings::getInstance();
-        IRenderer& r = s.getRenderer();
-
-        // TODO
-    }
+    void setToRender() const override;
 
     ~DotLight() noexcept override = default;
 

@@ -5,8 +5,6 @@
 #ifndef GVIEWER_VERTEX_H
 #define GVIEWER_VERTEX_H
 
-#include <sstream>
-#include <utility>
 #include "ShadingCoefficients.h++"
 #include "../Scene/ISceneObject.h++"
 #include "../../Geometry/Basics/Point2.h++"

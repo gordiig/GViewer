@@ -22,8 +22,8 @@ protected:
     DynArray<ScreenVertex> screenVtxs;
 
 public:
-    Renderable3DObject(const DynArray<Vertex> &vtxs, const std::shared_ptr<ICamera>& camera) :
-            IRenderable(camera), vtxs(vtxs), projectedVtxs(), screenVtxs() {
+    explicit Renderable3DObject(const DynArray<Vertex> &vtxs) :
+            IRenderable(), vtxs(vtxs), projectedVtxs(), screenVtxs() {
     }
 
     Renderable3DObject(const Renderable3DObject &copy) = default;

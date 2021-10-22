@@ -5,7 +5,6 @@
 #ifndef GVIEWER_SETTINGS_H
 #define GVIEWER_SETTINGS_H
 
-#include <sstream>
 #include "../Utils/BaseObject.h++"
 #include "../Graphics/Screen/CameraPyramid.h++"
 
@@ -18,10 +17,10 @@ class Settings: public BaseObject {
 protected:
     Settings() noexcept = default;
 
-    std::unique_ptr<IRenderer> renderer;
+    std::shared_ptr<IRenderer> renderer;
     std::shared_ptr<ICamera> currentCamera;
-    std::unique_ptr<CameraPyramid> cameraPyramid;
-    std::unique_ptr<IShader> currentShader;
+    std::shared_ptr<CameraPyramid> cameraPyramid;
+    std::shared_ptr<IShader> currentShader;
 
 public:
     Settings(const Settings &copy) noexcept = delete;
@@ -38,15 +37,16 @@ public:
 
     [[nodiscard]] IRenderer& getRenderer() const { return *renderer; }
     [[nodiscard]] ICamera& getCamera() const { return *currentCamera; }
+    [[nodiscard]] std::shared_ptr<ICamera> getCameraPtr() const { return currentCamera; }
     [[nodiscard]] IShader& getShader() const { return *currentShader; }
     [[nodiscard]] CameraPyramid& getCameraPyramid() { return *cameraPyramid; };
 
-    void setRenderer(std::unique_ptr<IRenderer> &&newRenderer) { this->renderer = std::move(newRenderer); }
+    void setRenderer(std::shared_ptr<IRenderer> &&newRenderer) { this->renderer = std::move(newRenderer); }
     void setCamera(std::shared_ptr<ICamera> &&newCamera) {
         this->cameraPyramid = std::make_unique<CameraPyramid>(CameraPyramid(*newCamera));
         this->currentCamera = std::move(newCamera);
     }
-    void setShader(std::unique_ptr<IShader> &&newShader) { this->currentShader = std::move(newShader); }
+    void setShader(std::shared_ptr<IShader> &&newShader) { this->currentShader = std::move(newShader); }
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;

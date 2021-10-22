@@ -5,12 +5,13 @@
 #ifndef GVIEWER_IRENDERABLELIGHT_H
 #define GVIEWER_IRENDERABLELIGHT_H
 
+#include "../IRenderable.h++"
+#include "../../../Screen.h++"
+#include "../../../../Basics/Vertex.h++"
+#include "../../../../Scene/ConcreteObjects/Lights/ILight.h++"
 #include "../../../../../Geometry/Basics/Vector.h++"
 #include "../../../../../Geometry/Basics/Point3.h++"
 #include "../../../../../Geometry/Transform/PointTransformer.h++"
-#include "../../../../Basics/Vertex.h++"
-#include "../../../../Scene/ConcreteObjects/Lights/ILight.h++"
-#include "../IRenderable.h++"
 
 class ICamera;
 
@@ -29,8 +30,8 @@ protected:
 public:
     const static unsigned short MAX_INTENSITY;
 
-    IRenderableLight(const ILight &light, std::shared_ptr<ICamera> &camera) noexcept :
-            IRenderable(camera), lightPosition(light.getOrigin()), lightIntensity(light.getIntensity()) {
+    explicit IRenderableLight(const ILight &light) noexcept :
+            IRenderable(), lightPosition(light.getOrigin()), lightIntensity(light.getIntensity()) {
         PointTransformer::turn(lightPosition, light.getAngles(), light.getTurnOrigin());
     }
 
@@ -49,7 +50,5 @@ public:
 
     [[nodiscard]] std::string toString() const override { return "[IRenderableLight]"; }
 };
-
-const unsigned short IRenderableLight::MAX_INTENSITY = 255;
 
 #endif //GVIEWER_IRENDERABLELIGHT_H

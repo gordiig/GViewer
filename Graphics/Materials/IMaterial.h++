@@ -5,7 +5,6 @@
 #ifndef GVIEWER_IMATERIAL_H
 #define GVIEWER_IMATERIAL_H
 
-#include <sstream>
 #include "../../Utils/BaseObject.h++"
 #include "../Basics/RGBA.h++"
 

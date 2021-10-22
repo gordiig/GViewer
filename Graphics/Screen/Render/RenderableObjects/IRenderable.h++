@@ -5,17 +5,14 @@
 #ifndef GVIEWER_IRENDERABLE_H
 #define GVIEWER_IRENDERABLE_H
 
-#include <sstream>
-#include <utility>
-#include <optional>
-
+#include "../../Screen.h++"
+#include "../../../Basics/Vertex.h++"
+#include "../../../Materials/IMaterial.h++"
 #include "../../../../Utils/BaseObject.h++"
 #include "../../../../Utils/Containers/DynArray.h++"
 #include "../../../../Geometry/Basics/Point2.h++"
-#include "../../../Basics/Vertex.h++"
-#include "../../../Materials/IMaterial.h++"
+#include "../../../../Settings/Settings.h++"
 
-class Screen;
 class ICamera;
 
 class IRenderable: public BaseObject {
@@ -30,7 +27,10 @@ protected:
     virtual Screen drawObject() = 0;
 
 public:
-    explicit IRenderable(std::shared_ptr<ICamera> camera) noexcept : camera(std::move(camera)) {}
+    IRenderable() noexcept {
+        const auto& settings = Settings::getInstance();
+        camera = settings.getCameraPtr();
+    }
 
     IRenderable(const IRenderable &copy) = default;
     IRenderable(IRenderable &&move) noexcept = default;
@@ -44,7 +44,5 @@ public:
 
     [[nodiscard]] std::string toString() const override { return "[IRenderable]"; }
 };
-
-const Screen IRenderable::EMPTY_SCREEN = {0, 0, {0, 0}};
 
 #endif //GVIEWER_IRENDERABLE_H

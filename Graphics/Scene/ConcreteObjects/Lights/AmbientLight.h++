@@ -6,9 +6,6 @@
 #ifndef GVIEWER_AMBIENTLIGHT_H
 #define GVIEWER_AMBIENTLIGHT_H
 
-#include <sstream>
-#include "../../../../Settings/Settings.h++"
-#include "../../../Screen/Render/IRenderer.h++"
 #include "ILight.h++"
 
 
@@ -22,12 +19,7 @@ public:
     AmbientLight& operator = (const AmbientLight &copy) noexcept = default;
     AmbientLight& operator = (AmbientLight &&move) noexcept = default;
 
-    void setToRender() const override {
-        Settings& s = Settings::getInstance();
-        IRenderer& r = s.getRenderer();
-
-        // TODO
-    }
+    void setToRender() const override;
 
     ~AmbientLight() noexcept override = default;
 

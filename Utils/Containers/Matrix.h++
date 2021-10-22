@@ -5,11 +5,9 @@
 #ifndef GVIEWER_MATRIX_H
 #define GVIEWER_MATRIX_H
 
-#include <sstream>
-#include <ostream>
-#include "../../Exceptions/Range.h++"
 #include "DynArray.h++"
 #include "../BaseObject.h++"
+#include "../../Exceptions/Range.h++"
 
 template <typename T>
 class Matrix: public BaseObject{
@@ -42,24 +40,10 @@ public:
         return ans;
     }
 
-    Matrix(const Matrix<T> &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    Matrix(Matrix<T> &&move) noexcept { *this = move; }
-    Matrix<T>& operator = (const Matrix<T> &copy) noexcept {
-        mat = copy.mat;
-        _rows = copy._rows;
-        _columns = copy._columns;
-        return *this;
-    }
-    Matrix<T>& operator = (Matrix<T> &&move) noexcept {
-        mat = move.mat;
-        _rows = move._rows;
-        _columns = move._columns;
-        return *this;
-    }
+    Matrix(const Matrix<T> &copy) noexcept = default;
+    Matrix(Matrix<T> &&move) noexcept = default;
+    Matrix<T>& operator = (const Matrix<T> &copy) noexcept = default;
+    Matrix<T>& operator = (Matrix<T> &&move) noexcept = default;
 
     ~Matrix() noexcept override = default;
 
@@ -76,11 +60,7 @@ public:
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
-        for (const auto &row : mat) {
-            for (const auto &item : row)
-                sst << item << " ";
-            sst << std::endl;
-        }
+        sst << "[Matrix rows = " << rows() << ", columns = " << columns() << ']';
         return sst.str();
     }
 };

@@ -132,6 +132,4 @@ public:
     [[nodiscard]] std::string toString() const override { return "[IShader]"; }
 };
 
-const Screen IShader::EMPTY_SCREEN = {0, 0, {0, 0}};
-
 #endif //GVIEWER_ISHADER_H

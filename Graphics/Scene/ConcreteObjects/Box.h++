@@ -5,7 +5,6 @@
 #ifndef GVIEWER_BOX_H
 #define GVIEWER_BOX_H
 
-#include <sstream>
 #include "../CompositeSceneObject.h++"
 #include "../../Materials/IMaterial.h++"
 #include "../../../Geometry/Basics/Point3.h++"

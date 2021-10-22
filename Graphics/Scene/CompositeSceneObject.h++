@@ -5,7 +5,6 @@
 #ifndef GVIEWER_COMPOSITESCENEOBJECT_H
 #define GVIEWER_COMPOSITESCENEOBJECT_H
 
-#include <sstream>
 #include "ISceneObject.h++"
 #include "../../Utils/BaseObject.h++"
 #include "../../Utils/Containers/DynArray.h++"
@@ -33,8 +32,8 @@ public:
     void setOrigin(const Coordinate &coord) noexcept override {
         Coordinate coordForSubobj;
         for (auto& obj : subObjects) {
-            // У сабайтемов другие ориджины, которые должны сместиться в точку, отличающуюся от coord
-            // Точка в которую они переносятся рассчитывается как `coord - (this.origin - obj.origin)`
+            // Subitems have different origins, and they must move to the point, different from coord
+            // Point, where they need to move, equals `coord - (this.origin - obj.origin)`
             coordForSubobj = coord - this->origin + obj->getOrigin();
             obj->setOrigin(coordForSubobj);
         }
@@ -43,8 +42,8 @@ public:
     void setTurnOrigin(const Coordinate &turnOrigin) noexcept override {
         Coordinate coordForSubobj;
         for (auto& obj : subObjects) {
-            // У сабайтемов другие ориджины, которые должны сместиться в точку, отличающуюся от coord
-            // Точка в которую они переносятся рассчитывается как `coord - (this.origin - obj.origin)`
+            // Subitems have different origins, and they must move to the point, different from coord
+            // Point, where they need to move, equals `coord - (this.origin - obj.origin)`
             coordForSubobj = turnOrigin - this->origin + obj->getTurnOrigin();
             obj->setTurnOrigin(coordForSubobj);
         }
@@ -53,8 +52,8 @@ public:
     void setScaleOrigin(const Coordinate &scaleOrigin) noexcept override {
         Coordinate coordForSubobj;
         for (auto& obj : subObjects) {
-            // У сабайтемов другие ориджины, которые должны сместиться в точку, отличающуюся от coord
-            // Точка в которую они переносятся рассчитывается как `coord - (this.origin - obj.origin)`
+            // Subitems have different origins, and they must move to the point, different from coord
+            // Point, where they need to move, equals `coord - (this.origin - obj.origin)`
             coordForSubobj = scaleOrigin - this->scaleOrigin + obj->getScaleOrigin();
             obj->setScaleOrigin(coordForSubobj);
         }
@@ -71,7 +70,6 @@ public:
         for (auto &obj : subObjects)
             obj->scale(sf);
     }
-
 
     void setMaterial(const std::shared_ptr<IMaterial> &material) noexcept override {
         this->material = material;

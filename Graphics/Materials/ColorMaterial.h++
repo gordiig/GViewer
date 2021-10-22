@@ -5,8 +5,7 @@
 #ifndef GVIEWER_COLORMATERIAL_H
 #define GVIEWER_COLORMATERIAL_H
 
-#include <sstream>
-#include <utility>
+
 #include "../Basics/RGBA.h++"
 #include "IMaterial.h++"
 

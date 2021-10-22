@@ -115,8 +115,8 @@ protected:
     }
 
 public:
-    explicit RenderablePolygon(const Polygon &polygon, const std::shared_ptr<ICamera>& camera) :
-            Renderable3DObject({}, camera), material(polygon.getMaterialPtr()) {
+    explicit RenderablePolygon(const Polygon &polygon) :
+            Renderable3DObject({}), material(polygon.getMaterialPtr()) {
         Vertex v1 = polygon.getV1();
         Vertex v2 = polygon.getV2();
         Vertex v3 = polygon.getV3();

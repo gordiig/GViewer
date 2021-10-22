@@ -5,7 +5,6 @@
 #ifndef GVIEWER_SCALEFACTOR_H
 #define GVIEWER_SCALEFACTOR_H
 
-#include <sstream>
 #include "../../Utils/BaseObject.h++"
 
 
@@ -16,25 +15,11 @@ struct ScaleFactor: public BaseObject {
 
     explicit ScaleFactor(double x = 1, double y = 1, double z = 1) noexcept : x(x), y(y), z(z) {}
 
-    ScaleFactor(const ScaleFactor &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    ScaleFactor(ScaleFactor &&move) noexcept { *this = move; }
+    ScaleFactor(const ScaleFactor &copy) noexcept = default;
+    ScaleFactor(ScaleFactor &&move) noexcept = default;
 
-    ScaleFactor& operator = (const ScaleFactor &copy) noexcept {
-        x = copy.x;
-        y = copy.y;
-        z = copy.z;
-        return *this;
-    }
-    ScaleFactor& operator = (ScaleFactor &&move) noexcept {
-        x = move.x;
-        y = move.y;
-        z = move.z;
-        return *this;
-    }
+    ScaleFactor& operator = (const ScaleFactor &copy) noexcept = default;
+    ScaleFactor& operator = (ScaleFactor &&move) noexcept = default;
 
     ~ScaleFactor() noexcept override = default;
 

@@ -6,8 +6,6 @@
 #define GVIEWER_DYNARRAY_H
 
 #include <vector>
-#include <ostream>
-#include <sstream>
 #include "../BaseObject.h++"
 #include "../../Exceptions/Range.h++"
 
@@ -28,7 +26,7 @@ public:
     DynArray(DynArray<T> &&move) noexcept = default;
 
     DynArray<T> &operator=(const DynArray<T> &copy) = default;
-    DynArray<T> &operator=(DynArray<T> &&move) noexcept  = default;
+    DynArray<T> &operator=(DynArray<T> &&move) noexcept = default;
 
     ~DynArray() override = default;
 
@@ -86,8 +84,10 @@ public:
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
+        sst << "[DynArray: ";
         for (const auto &item : vec)
             sst << item << " ";
+        sst << ']';
         return sst.str();
     }
 };

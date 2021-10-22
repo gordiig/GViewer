@@ -6,7 +6,6 @@
 #define GVIEWER_ANGLESYSTEM_H
 
 
-#include <sstream>
 #include <utility>
 #include "../../Utils/BaseObject.h++"
 #include "../Basics/Angle.h++"

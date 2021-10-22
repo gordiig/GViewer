@@ -5,13 +5,14 @@
 #ifndef GVIEWER_ISCENEOBJECT_H
 #define GVIEWER_ISCENEOBJECT_H
 
-#include <sstream>
 #include "../../Utils/Containers/DynArray.h++"
 #include "../../Geometry/Basics/Point3.h++"
 #include "../../Geometry/Basics/Vector.h++"
 #include "../../Geometry/Utils/AngleSystem.h++"
 #include "../../Geometry/Utils/ScaleFactor.h++"
-#include "../../Graphics/Materials/IMaterial.h++"
+
+class IMaterial;
+
 
 class ISceneObject: public BaseObject {
     friend class CompositeSceneObject;
@@ -31,6 +32,7 @@ protected:
     static unsigned long long idCounter;
     unsigned long long id;
 
+    // Yeah, that's not good
     virtual void setKa(double ka) = 0;
 
 public:
@@ -83,8 +85,6 @@ public:
     }
 
 };
-
-unsigned long long ISceneObject::idCounter = 0;
 
 
 #endif //GVIEWER_ISCENEOBJECT_H

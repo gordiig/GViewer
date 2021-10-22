@@ -5,7 +5,6 @@
 #ifndef GVIEWER_RGBA_H
 #define GVIEWER_RGBA_H
 
-#include <sstream>
 #include "../../Utils/BaseObject.h++"
 #include "../../Exceptions/Exception.h++"
 

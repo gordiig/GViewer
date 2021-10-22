@@ -5,7 +5,6 @@
 #ifndef GVIEWER_ANGLE_H
 #define GVIEWER_ANGLE_H
 
-#include <sstream>
 #include <ostream>
 #include <cmath>
 #include "../../Utils/BaseObject.h++"

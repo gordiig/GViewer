@@ -5,7 +5,6 @@
 #ifndef GVIEWER_SINGLESIDEPLANE_H
 #define GVIEWER_SINGLESIDEPLANE_H
 
-#include <sstream>
 #include "../CompositeSceneObject.h++"
 #include "../../Basics/Polygon.h++"
 #include "../../../Geometry/Basics/Point2.h++"

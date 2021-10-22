@@ -5,8 +5,6 @@
 #ifndef GVIEWER_POINT2_H
 #define GVIEWER_POINT2_H
 
-#include <ostream>
-#include <sstream>
 #include <type_traits>
 #include "../../Utils/BaseObject.h++"
 
@@ -25,22 +23,11 @@ struct Point2: public BaseObject {
     Point2() noexcept = default;
     Point2(X x, Y y) noexcept : x(x), y(y) {}
 
-    Point2(const Point2<X, Y> &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    Point2(Point2<X, Y> &&copy) noexcept { *this = copy; }
-    Point2<X, Y>& operator = (const Point2<X, Y> &copy) noexcept {
-        x = copy.x;
-        y = copy.y;
-        return *this;
-    }
-    Point2<X, Y>& operator = (Point2<X, Y> &&copy) noexcept {
-        x = copy.x;
-        y = copy.y;
-        return *this;
-    }
+    Point2(const Point2<X, Y> &copy) noexcept = default;
+    Point2(Point2<X, Y> &&copy) noexcept =default;
+
+    Point2<X, Y>& operator = (const Point2<X, Y> &copy) noexcept = default;
+    Point2<X, Y>& operator = (Point2<X, Y> &&copy) noexcept = default;
 
     ~Point2() noexcept override = default;
 

@@ -5,7 +5,6 @@
 #ifndef GVIEWER_PAIR_H
 #define GVIEWER_PAIR_H
 
-#include <sstream>
 #include "../BaseObject.h++"
 
 template<typename T1, typename T2>
@@ -32,7 +31,7 @@ struct Pair: public BaseObject {
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
-        sst << "[pair first = " << first << ", second = " << second << ']';
+        sst << "[Pair first = " << first << ", second = " << second << ']';
         return sst.str();
     }
 };

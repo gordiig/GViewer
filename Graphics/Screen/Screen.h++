@@ -5,7 +5,6 @@
 #ifndef GVIEWER_SCREEN_H
 #define GVIEWER_SCREEN_H
 
-#include <sstream>
 #include "../Basics/RGBA.h++"
 #include "../../Utils/BaseObject.h++"
 #include "../../Utils/Containers/Matrix.h++"

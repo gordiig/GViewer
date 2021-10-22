@@ -5,7 +5,6 @@
 #ifndef GVIEWER_SHADINGCOEFFICIENTS_H
 #define GVIEWER_SHADINGCOEFFICIENTS_H
 
-#include <sstream>
 #include "../../Exceptions/Exception.h++"
 #include "../../Utils/BaseObject.h++"
 

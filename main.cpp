@@ -67,6 +67,8 @@
 
 int main(int argc, char *argv[]) {
 
+    DotLight light(10);
+
     return 0;
 
 //    QApplication a(argc, argv);

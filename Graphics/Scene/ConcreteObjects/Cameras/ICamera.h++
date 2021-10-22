@@ -5,8 +5,7 @@
 #ifndef GVIEWER_ICAMERA_H
 #define GVIEWER_ICAMERA_H
 
-#include <sstream>
-#include <utility>
+
 #include "../../BaseSceneObject.h++"
 #include "../../../../Geometry/Basics/Vector.h++"
 #include "../../../../Geometry/Basics/Angle.h++"

@@ -51,7 +51,24 @@ add_executable(
         Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++
         Graphics/Scene/ConcreteObjects/Lights/ILight.h++
         Graphics/Screen/Render/RenderableObjects/IRenderable.h++
-        Graphics/Screen/Render/RenderableObjects/3D/RenderablePolygon.h++ Graphics/Screen/Render/Shaders/IShader.h++ Utils/Interpolator.h++ Utils/LineInterpolator.h++ Graphics/Screen/CameraPyramid.h++ Graphics/Screen/Render/Shaders/LambertShader.h++ Graphics/Screen/Render/Shaders/GouraudShader.h++ Graphics/Screen/Render/Shaders/PhongShader.h++ Graphics/Screen/Render/RenderableObjects/Lights/IRenderableLight.h++ Graphics/Screen/Render/RenderableObjects/3D/Renderable3DObject.h++ Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++ Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++ Graphics/Screen/Render/RenderableObjects/Lights/RenderableAmbientLight.h++)
+        Graphics/Screen/Render/RenderableObjects/3D/RenderablePolygon.h++
+        Graphics/Screen/Render/Shaders/IShader.h++
+        Utils/Interpolator.h++
+        Utils/LineInterpolator.h++
+        Graphics/Screen/CameraPyramid.h++
+        Graphics/Screen/Render/Shaders/LambertShader.h++
+        Graphics/Screen/Render/Shaders/GouraudShader.h++
+        Graphics/Screen/Render/Shaders/PhongShader.h++
+        Graphics/Screen/Render/RenderableObjects/Lights/IRenderableLight.h++
+        Graphics/Screen/Render/RenderableObjects/3D/Renderable3DObject.h++
+        Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++
+        Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++
+        Graphics/Screen/Render/RenderableObjects/Lights/RenderableAmbientLight.h++
+        Graphics/Scene/ConcreteObjects/cpp/Polygon.cpp
+        Graphics/Scene/ConcreteObjects/cpp/AmbientLight.cpp
+        Graphics/Scene/ConcreteObjects/cpp/DotLight.cpp
+        consts.cpp
+)
 
 target_link_libraries(GViewer
         PUBLIC

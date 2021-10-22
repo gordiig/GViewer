@@ -5,8 +5,6 @@
 #ifndef GVIEWER_POINT3_H
 #define GVIEWER_POINT3_H
 
-#include <ostream>
-#include <sstream>
 #include "../../Utils/BaseObject.h++"
 #include "../../Exceptions/Math.h++"
 
@@ -29,24 +27,11 @@ struct Point3: public BaseObject {
     static Point3<X, Y, Z> zero() noexcept { return Point3(0, 0, 0); }
     static Point3<X, Y, Z> unit() noexcept { return Point3(1, 1, 1); }
 
-    Point3(const Point3<X, Y, Z> &copy) noexcept {
-        if (this == &copy)
-            return;
-        *this = copy;
-    }
-    Point3(Point3<X, Y, Z> &&move) noexcept { *this = move; }
-    Point3<X, Y, Z>& operator = (const Point3<X, Y, Z> &copy) noexcept {
-        x = copy.x;
-        y = copy.y;
-        z = copy.z;
-        return *this;
-    }
-    Point3<X, Y, Z>& operator = (Point3<X, Y, Z> &&move) noexcept {
-        x = move.x;
-        y = move.y;
-        z = move.z;
-        return *this;
-    }
+    Point3(const Point3<X, Y, Z> &copy) noexcept = default;
+    Point3(Point3<X, Y, Z> &&move) noexcept = default;
+
+    Point3& operator = (const Point3<X, Y, Z> &copy) noexcept = default;
+    Point3& operator = (Point3<X, Y, Z> &&move) noexcept = default;
 
     ~Point3() noexcept override = default;
 

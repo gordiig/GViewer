@@ -5,7 +5,6 @@
 #ifndef GVIEWER_BASESCENEOBJECT_H
 #define GVIEWER_BASESCENEOBJECT_H
 
-#include <sstream>
 #include "ISceneObject.h++"
 
 class BaseSceneObject: public ISceneObject {

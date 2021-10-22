@@ -14,7 +14,7 @@ class ICamera;
 
 class RenderableDotLight: public IRenderableLight {
 public:
-    RenderableDotLight(const DotLight &light, std::shared_ptr<ICamera> &camera) noexcept : IRenderableLight(light, camera) { }
+    explicit RenderableDotLight(const DotLight &light) noexcept : IRenderableLight(light) { }
 
     RenderableDotLight(const RenderableDotLight &copy) noexcept = default;
     RenderableDotLight(RenderableDotLight &&move) noexcept = default;
