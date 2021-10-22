@@ -21,59 +21,6 @@ protected:
     DynArray<Vertex> projectedVtxs;
     DynArray<ScreenVertex> screenVtxs;
 
-    [[nodiscard]] auto sizeRectangleForScreen() const noexcept {
-        if (screenVtxs.isEmpty())
-            return Pair(Point2<size_t, size_t>{0, 0}, Point2<size_t, size_t>{0, 0});
-
-        const auto& firstScreenVtxPos = screenVtxs[0].pos;
-        Point2<size_t, size_t> minPt = {firstScreenVtxPos.x, firstScreenVtxPos.y};
-        Point2<size_t, size_t> maxPt = {firstScreenVtxPos.x, firstScreenVtxPos.y};
-
-        for (const auto& screenVtx : screenVtxs) {
-            const auto& curPos = screenVtx.pos;
-
-            if (curPos.x > maxPt.x)
-                maxPt.x = curPos.x;
-            if (curPos.y > maxPt.y)
-                maxPt.y = curPos.y;
-            if (curPos.x < minPt.x)
-                minPt.x = curPos.x;
-            if (curPos.y < minPt.y)
-                minPt.y = curPos.y;
-        }
-
-        return Pair(minPt, maxPt);
-    }
-
-    [[nodiscard]] Pair<size_t, size_t> getScreenSize() const noexcept {
-        if (screenVtxs.isEmpty())
-            return {0, 0};
-
-        auto [minCoord, maxCoord] = sizeRectangleForScreen();
-        size_t width = maxCoord.x - minCoord.x;
-        size_t height = maxCoord.y - minCoord.y;
-
-        return {width, height};
-    }
-
-    [[nodiscard]] long findTopScreenCoordIdx() const noexcept {
-        if (screenVtxs.isEmpty())
-            return -1;
-
-        long ansIdx = 0;
-        auto topYCoord = screenVtxs[ansIdx].pos.y;
-
-        for (int i = 1; i < screenVtxs.count(); i++) {
-            const auto curY = screenVtxs[i].pos.y;
-            if (curY < topYCoord) {
-                topYCoord = curY;
-                ansIdx = i;
-            }
-        }
-
-        return ansIdx;
-    }
-
 public:
     Renderable3DObject(const DynArray<Vertex> &vtxs, const std::shared_ptr<ICamera>& camera) :
             IRenderable(camera), vtxs(vtxs), projectedVtxs(), screenVtxs() {

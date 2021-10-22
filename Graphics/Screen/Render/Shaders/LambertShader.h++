@@ -126,8 +126,8 @@ public:
             x2Double = (double) x2;
 
             // Getting tx and z from both lines
-            Point2 line1Tx = line1InterpolatorTx.interpolate({x1, sy});
-            Point2 line2Tx = line2InterpolatorTx.interpolate({x2, sy});
+            Point2 line1Tx = line1InterpolatorTx.interpolate({x1Double, syDouble});
+            Point2 line2Tx = line2InterpolatorTx.interpolate({x2Double, syDouble});
             double line1Z = line1ZInterpolatorByY.interpolate(syDouble);
             double line2Z = line2ZInterpolatorByY.interpolate(syDouble);
 

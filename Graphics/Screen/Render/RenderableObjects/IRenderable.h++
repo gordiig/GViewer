@@ -20,6 +20,7 @@ class ICamera;
 
 class IRenderable: public BaseObject {
 protected:
+    const static Screen EMPTY_SCREEN;
     std::shared_ptr<ICamera> camera;
 
     virtual void transformToCameraSpace() = 0;
@@ -43,5 +44,7 @@ public:
 
     [[nodiscard]] std::string toString() const override { return "[IRenderable]"; }
 };
+
+const Screen IRenderable::EMPTY_SCREEN = {0, 0, {0, 0}};
 
 #endif //GVIEWER_IRENDERABLE_H

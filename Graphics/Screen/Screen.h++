@@ -127,10 +127,10 @@ public:
 
     ~Screen() noexcept override = default;
 
-    [[nodiscard]] std::string toString() const noexcept override {
+    [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
         sst << "[Screen width = " << bitmapWithDepth.rows() << ", height = " << bitmapWithDepth.columns() << ']';
-        return BaseObject::toString();
+        return sst.str();
     }
 };
 

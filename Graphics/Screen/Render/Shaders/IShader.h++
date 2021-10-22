@@ -7,16 +7,14 @@
 
 #include "../RenderableObjects/Lights/IRenderableLight.h++"
 #include "../../Screen.h++"
-#include "../../../Utils/Containers/DynArray.h++"
-#include "../../../Utils/Containers/Pair.h++"
-#include "../../../Utils/Interpolator.h++"
-#include "../../../Utils/LineInterpolator.h++"
-#include "../../../Graphics/Basics/Vertex.h++"
-#include "../../../Geometry/Basics/Point2.h++"
-#include "../../../Utils/BaseObject.h++"
+#include "../../../../Utils/Containers/DynArray.h++"
+#include "../../../../Utils/Containers/Pair.h++"
+#include "../../../../Utils/Interpolator.h++"
+#include "../../../../Utils/LineInterpolator.h++"
+#include "../../../../Graphics/Basics/Vertex.h++"
+#include "../../../../Geometry/Basics/Point2.h++"
+#include "../../../../Utils/BaseObject.h++"
 
-class IRenderable;
-class ICamera;
 class IMaterial;
 
 class IShader: public BaseObject {
@@ -27,18 +25,18 @@ protected:
 
     DynArray<std::shared_ptr<IRenderableLight>> lights{};
 
-    [[nodiscard]] static LineInterpolator<size_t, double> getTxInterpolator(const VertexLine &line) noexcept {
+    [[nodiscard]] static LineInterpolator getTxInterpolator(const VertexLine &line) noexcept {
         const auto& lineStartPos = line.first.pos;
         const auto& lineStartTx = line.first.tx;
         const auto& lineEndPos = line.second.pos;
         const auto& lineEndTx = line.second.tx;
 
-        Point2 lineStart2D = {lineStartPos.x, lineStartPos.y};
-        Point2 lineEnd2D = {lineEndPos.x, lineEndPos.y};
-        Point2 lineStartTx2D = {lineStartTx.x, lineStartTx.y};
-        Point2 lineEndTx2D = {lineEndTx.x, lineEndTx.y};
+        Point2<double, double> lineStart2D = {(double) lineStartPos.x, (double) lineStartPos.y};
+        Point2<double, double> lineEnd2D = {(double) lineEndPos.x, (double) lineEndPos.y};
+        Point2<double, double> lineStartTx2D = {lineStartTx.x, lineStartTx.y};
+        Point2<double, double> lineEndTx2D = {lineEndTx.x, lineEndTx.y};
 
-        LineInterpolator<size_t, double> ans({lineStart2D, lineEnd2D}, {lineStartTx2D, lineEndTx2D});
+        LineInterpolator ans({lineStart2D, lineEnd2D}, {lineStartTx2D, lineEndTx2D});
         return ans;
     }
     [[nodiscard]] static Interpolator getZInterpolatorByY(const VertexLine &line) {

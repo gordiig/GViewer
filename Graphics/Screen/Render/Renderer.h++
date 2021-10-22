@@ -5,15 +5,16 @@
 #ifndef GVIEWER_RENDERER_H
 #define GVIEWER_RENDERER_H
 
-#include <sstream>
-#include "../../../Utils/BaseObject.h++"
-#include "../../../Utils/Containers/DynArray.h++"
-#include "../../Scene/ISceneObject.h++"
-#include "../Screen.h++"
 #include "IRenderer.h++"
+#include "Shaders/IShader.h++"
+#include "RenderableObjects/IRenderable.h++"
+#include "../Screen.h++"
+#include "../../Scene/ConcreteObjects/Cameras/ICamera.h++"
+#include "../../../Settings/Settings.h++"
+#include "../../../Utils/Containers/DynArray.h++"
 
 
-class Renderer: public BaseObject, public IRenderer {
+class Renderer: public IRenderer {
 public:
     Renderer() noexcept = default;
 
@@ -23,18 +24,34 @@ public:
     Renderer& operator = (const Renderer &copy) noexcept = default;
     Renderer& operator = (Renderer &&move) noexcept = default;
 
+    Screen render() override {
+        // Getting shader and configuring it with lights
+        const auto& settings = Settings::getInstance();
+        auto& shader = settings.getShader();
+        shader.configure(lights);
+
+        // Getting camera screen size
+        const auto& camera = settings.getCamera();
+        const size_t screenWidth = camera.getScreenWidth();
+        const size_t screenHeight = camera.getScreenHeight();
+
+        // Initializing screen with 0 offset
+        Screen ans = Screen(screenWidth, screenHeight, {0, 0});
+
+        // Initializing temp screen for every figure
+        Screen currentFigureScreen{0, 0, {0, 0}};
+        for (const auto& figure : objectsToRender) {
+            // Rendering current figure, and applying its screen to the main screen
+            currentFigureScreen = figure->render();
+            ans.apply(currentFigureScreen);
+        }
+
+        return ans;
+    }
+
     ~Renderer() noexcept override = default;
 
-    Screen render() override {
-        // TODO
-        objectsToRender.clear();
-    }
-
-    [[nodiscard]] std::string toString() const override {
-        std::stringstream sst;
-        sst << "Renderer";
-        return sst.str();
-    }
+    [[nodiscard]] std::string toString() const override { return "[Rederer]"; }
 
 };
 

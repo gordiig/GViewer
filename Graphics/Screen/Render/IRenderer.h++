@@ -5,19 +5,19 @@
 #ifndef GVIEWER_IRENDERER_H
 #define GVIEWER_IRENDERER_H
 
+#include "../../../Utils/BaseObject.h++"
 #include "../../../Utils/Containers/DynArray.h++"
-#include "../Screen.h++"
-
 
 // For reduction of circular includes
 class IRenderable;
-class ILight;
+class IRenderableLight;
+class Screen;
 
 
-class IRenderer {
+class IRenderer: public BaseObject {
 protected:
     DynArray<std::shared_ptr<IRenderable>> objectsToRender;
-    DynArray<std::shared_ptr<ILight>> lights;
+    DynArray<std::shared_ptr<IRenderableLight>> lights;
 
 public:
     IRenderer() noexcept = default;
@@ -29,11 +29,19 @@ public:
     IRenderer& operator = (IRenderer &&move) noexcept = default;
 
     virtual void addToRender(std::shared_ptr<IRenderable> &&obj) { objectsToRender.append(std::move(obj)); }
-    virtual void addToRender(std::shared_ptr<ILight> &&light) { lights.append(std::move(light)); }
+    virtual void addToRender(std::shared_ptr<IRenderableLight> &&light) { lights.append(std::move(light)); }
 
     virtual Screen render() = 0;
 
-    virtual ~IRenderer() = default;
+    virtual void clear() noexcept {
+        objectsToRender.clear();
+        lights.clear();
+    }
+
+    ~IRenderer() noexcept override = default;
+
+    [[nodiscard]] std::string toString() const override { return "[IRenderer]"; }
+
 };
 
 #endif //GVIEWER_IRENDERER_H
