@@ -1,4 +1,4 @@
-//#include <QApplication>
+#include <QApplication>
 //#include <QPushButton>
 #include <iostream>
 
@@ -63,13 +63,20 @@
 #include "Utils/Containers/Matrix.h++"
 #include "Utils/Containers/Pair.h++"
 
+#include "GUI/MainWindow.h++"
+#include "GUI/ScreenView.h++"
+#include "GUI/RightMenu.h++"
+#include "GUI/CoordsRow.h++"
+
 
 
 int main(int argc, char *argv[]) {
 
-    DotLight light(10);
+    QApplication a(argc, argv);
+    MainWindow w(1280, 720, 900, 700);
 
-    return 0;
+    w.show();
+    return QApplication::exec();
 
 //    QApplication a(argc, argv);
 //    QPushButton button("Hello world!", nullptr);

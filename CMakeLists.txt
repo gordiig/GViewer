@@ -68,7 +68,7 @@ add_executable(
         Graphics/Scene/ConcreteObjects/cpp/AmbientLight.cpp
         Graphics/Scene/ConcreteObjects/cpp/DotLight.cpp
         consts.cpp
-)
+        GUI/MainWindow.h++ GUI/ScreenView.h++ GUI/RightMenu.h++ GUI/CoordsRow.h++ GUI/Utils/LabeledSpinBox.h++)
 
 target_link_libraries(GViewer
         PUBLIC
