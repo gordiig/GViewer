@@ -78,7 +78,7 @@ public:
     }
 
     void setToRender() const override {
-        for (auto &obj : subObjects)
+        for (const auto &obj : subObjects)
             obj->setToRender();
     }
 

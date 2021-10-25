@@ -27,6 +27,7 @@
 
 #include "Graphics/Scene/ConcreteObjects/SingleSidePlane.h++"
 #include "Graphics/Scene/ConcreteObjects/Box.h++"
+#include "Graphics/Scene/ConcreteObjects/Scene.h++"
 
 #include "Graphics/Scene/ConcreteObjects/Lights/ILight.h++"
 #include "Graphics/Scene/ConcreteObjects/Lights/DotLight.h++"

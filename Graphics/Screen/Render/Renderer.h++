@@ -36,7 +36,7 @@ public:
         const size_t screenHeight = camera.getScreenHeight();
 
         // Initializing screen with 0 offset
-        Screen ans = Screen(screenWidth, screenHeight, {0, 0});
+        Screen ans = Screen(screenWidth, screenHeight, {0, 0}, backgroundColor);
 
         // Initializing temp screen for every figure
         Screen currentFigureScreen{0, 0, {0, 0}};

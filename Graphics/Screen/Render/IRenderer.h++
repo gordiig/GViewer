@@ -5,6 +5,7 @@
 #ifndef GVIEWER_IRENDERER_H
 #define GVIEWER_IRENDERER_H
 
+#include "../../../Basics/RGBA.h++"
 #include "../../../Utils/BaseObject.h++"
 #include "../../../Utils/Containers/DynArray.h++"
 
@@ -16,6 +17,7 @@ class Screen;
 
 class IRenderer: public BaseObject {
 protected:
+    RGBA backgroundColor;
     DynArray<std::shared_ptr<IRenderable>> objectsToRender;
     DynArray<std::shared_ptr<IRenderableLight>> lights;
 
@@ -30,6 +32,8 @@ public:
 
     virtual void addToRender(std::shared_ptr<IRenderable> &&obj) { objectsToRender.append(std::move(obj)); }
     virtual void addToRender(std::shared_ptr<IRenderableLight> &&light) { lights.append(std::move(light)); }
+
+    virtual void setBackgroundColor(const RGBA &bgColor) { backgroundColor = bgColor; }
 
     virtual Screen render() = 0;
 
