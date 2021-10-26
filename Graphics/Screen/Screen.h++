@@ -109,11 +109,11 @@ public:
         }
 
         // Adding rhs to this screen
-        for (size_t y = rhsMinY; y < rhsMaxY; y++) {
-            for (size_t x = rhsMinX; x < rhsMaxX; x++) {
+        for (size_t y = 0; y < rhsHeight; y++) {
+            for (size_t x = 0; x < rhsWidth; x++) {
                 const auto& rhsColor = rhs.getPixedColor(x, y);
                 const auto& rhsZIndex = rhs.getZIndex(x, y);
-                setPixelColor(x, y, rhsColor, rhsZIndex);
+                setPixelColor(x + rhsOffset.x, y + rhsOffset.y, rhsColor, rhsZIndex);
             }
         }
     }

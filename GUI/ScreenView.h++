@@ -19,18 +19,30 @@ class ScreenView: public QGraphicsView {
 protected:
     QGraphicsScene gs;
     QImage im;
-    QGraphicsPixmapItem *curItem = nullptr;
+    QGraphicsPixmapItem *pixmapItem;
 
     inline static QColor convertColor(const RGBA &color) noexcept {
-        return {color.getR(), color.getG(), color.getB(), color.getA()};
+        return {color.getR(), color.getG(), color.getB()};
+    }
+
+    void updateGraphicsScene() {
+        if (pixmapItem) {
+            gs.removeItem(pixmapItem);
+            delete pixmapItem;
+        }
+        pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(im));
+        gs.addItem(pixmapItem);
     }
 
 public:
     ScreenView(int width, int height, QWidget *parent = nullptr) :
-            QGraphicsView(parent), gs(this), im(width, height, QImage::Format_ARGB32_Premultiplied) {
+            QGraphicsView(parent), gs(this), im(width, height, QImage::Format_ARGB32_Premultiplied), pixmapItem(nullptr) {
         setFixedWidth(width);
         setFixedHeight(height);
         this->setScene(&gs);
+
+        im.fill(QColor(0, 0, 0));
+        updateGraphicsScene();
     }
 
     ScreenView(const ScreenView &copy) = delete;
@@ -40,24 +52,27 @@ public:
     ScreenView& operator = (ScreenView &&move) noexcept = delete;
 
     void setScreen(Screen &&screen) {
-        const auto& [width, height] = screen.getSize();
+        const auto& screenSize = screen.getSize();
+        const auto& width = screenSize.first;
+        const auto& height = screenSize.second;
 
         for (size_t y = 0; y < height; y++) {
             for (size_t x = 0; x < width; x++) {
-                im.setPixelColor((int) x, (int) y, convertColor(screen.getPixedColor(x, y)));
+                const auto& screenPixelColor = screen.getPixedColor(x, y);
+                const auto& qtColor = convertColor(screenPixelColor);
+
+                im.setPixelColor((int) x, (int) y, qtColor);
             }
         }
 
-        QPixmap px = QPixmap::fromImage(im);
-        if (curItem) {
-            gs.removeItem((QGraphicsItem*) curItem);
-            delete curItem;
-        }
-        curItem = gs.addPixmap(px);
+        updateGraphicsScene();
+        this->show();
     }
 
     // Cur item's owner is gs, so we have no need to delete it
-    ~ScreenView() override = default;
+    ~ScreenView() override {
+        delete pixmapItem;
+    }
 };
 
 #endif //GVIEWER_SCREENVIEW_H

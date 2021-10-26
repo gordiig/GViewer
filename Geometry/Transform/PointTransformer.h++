@@ -29,9 +29,9 @@ public:
     }
 
     static void move(Coordinate &c, const Coordinate &mv) noexcept {
-        c.x = mv.x;
-        c.y = mv.y;
-        c.z = mv.z;
+        c.x += mv.x;
+        c.y += mv.y;
+        c.z += mv.z;
     }
 
     static void turn(Coordinate &c, const AngleSystem &as, const Coordinate &around = Coordinate::zero()) noexcept {
@@ -46,7 +46,7 @@ public:
         // Ox
         oldY = c.y;
         c.y = around.y + (c.y - around.y) * as.xAxis.cosinus() - (c.z - around.z) * as.xAxis.sinus();
-        c.z = around.z + (oldY - around.y) * as.xAxis.sinus()  + (c.z = around.z) * as.xAxis.cosinus();
+        c.z = around.z + (oldY - around.y) * as.xAxis.sinus()  + (c.z - around.z) * as.xAxis.cosinus();
 
         // Oy
         oldX = c.x;
@@ -60,9 +60,12 @@ public:
     }
 
     static void scale(Coordinate &c, const ScaleFactor &sf, const Coordinate &around) noexcept {
-        c.x = around.x * sf.x;
-        c.y = around.y * sf.y;
-        c.z = around.z * sf.z;
+//        c.x = around.x * sf.x;
+//        c.y = around.y * sf.y;
+//        c.z = around.z * sf.z;
+        c.x *= sf.x;
+        c.y *= sf.y;
+        c.z *= sf.z;
     }
 
 };

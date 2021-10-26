@@ -19,34 +19,14 @@ protected:
     double _height;
     double _depth;
 
-    static SingleSidePlane constructWithCoords(
-            Coordinate &&leftTop,
-            Coordinate &&leftBottom,
-            Coordinate &&rightBottom,
-            Coordinate &&rightTop,
-            const Vector& norm) {
-        ShadingCoefficients sc = ShadingCoefficients(255, 255);
+    static SingleSidePlane constructWithCoords(Coordinate leftTop, Coordinate leftBottom, Coordinate rightBottom,
+                                               Coordinate rightTop, const Vector& norm) {
+        ShadingCoefficients sc = ShadingCoefficients(0.5, 0.5);
 
-        Vertex leftTopV = Vertex(
-                std::move(leftTop),
-                TextureCoordinate(0, 0),
-                norm,
-                sc);
-        Vertex leftBottomV = Vertex(
-                std::move(leftBottom),
-                TextureCoordinate(0, 1),
-                norm,
-                sc);
-        Vertex rightBottomV = Vertex(
-                std::move(rightBottom),
-                TextureCoordinate(1, 1),
-                norm,
-                sc);
-        Vertex rightTopV = Vertex(
-                std::move(rightTop),
-                TextureCoordinate(1, 0),
-                norm,
-                sc);
+        Vertex leftTopV = Vertex( std::move(leftTop), TextureCoordinate(0, 0),norm,sc);
+        Vertex leftBottomV = Vertex(std::move(leftBottom), TextureCoordinate(0, 1), norm, sc);
+        Vertex rightBottomV = Vertex(std::move(rightBottom), TextureCoordinate(1, 1), norm, sc);
+        Vertex rightTopV = Vertex(std::move(rightTop), TextureCoordinate(1, 0), norm, sc);
 
         Polygon p1 = Polygon(leftTopV, leftBottomV, rightTopV);
         Polygon p2 = Polygon(rightTopV, rightBottomV, leftBottomV);
@@ -73,12 +53,7 @@ public:
         Coordinate rightTop = Coordinate(leftTop.x + width, leftTop.y, leftTop.z);
         Vector norm = Vector(0, 0, positiveNorm ? 1 : -1);
 
-        return constructWithCoords(
-                std::move(leftTop),
-                std::move(leftBottom),
-                std::move(rightBottom),
-                std::move(rightTop),
-                norm);
+        return constructWithCoords(leftTop, leftBottom, rightBottom, rightTop, norm);
     }
     static SingleSidePlane oXZ(const Coordinate &leftTop_, double width, double height, bool positiveNorm = true) noexcept {
         Coordinate leftTop = leftTop_;
@@ -87,26 +62,16 @@ public:
         Coordinate rightTop = Coordinate(leftTop.x + width, leftTop.y, leftTop.z);
         Vector norm = Vector(0, positiveNorm ? 1 : -1, 0);
 
-        return constructWithCoords(
-                std::move(leftTop),
-                std::move(leftBottom),
-                std::move(rightBottom),
-                std::move(rightTop),
-                norm);
+        return constructWithCoords(leftTop, leftBottom, rightBottom, rightTop, norm);
     }
     static SingleSidePlane oYZ(const Coordinate &leftTop_, double width, double height, bool positiveNorm = true) noexcept {
         Coordinate leftTop = leftTop_;
-        Coordinate leftBottom = Coordinate(leftTop.x, leftTop.y, leftTop.z - height);
-        Coordinate rightBottom = Coordinate(leftTop.x, leftTop.y + width, leftTop.z - height);
-        Coordinate rightTop = Coordinate(leftTop.x, leftTop.y + width, leftTop.z);
+        Coordinate leftBottom = Coordinate(leftTop.x, leftTop.y - height, leftTop.z);
+        Coordinate rightBottom = Coordinate(leftTop.x, leftTop.y - height, leftTop.z + width);
+        Coordinate rightTop = Coordinate(leftTop.x, leftTop.y, leftTop.z + width);
         Vector norm = Vector(positiveNorm ? 1 : -1, 0, 0);
 
-        return constructWithCoords(
-                std::move(leftTop),
-                std::move(leftBottom),
-                std::move(rightBottom),
-                std::move(rightTop),
-                norm);
+        return constructWithCoords(leftTop, leftBottom, rightBottom, rightTop, norm);
     }
 
     SingleSidePlane(const SingleSidePlane &copy) = default;

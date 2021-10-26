@@ -82,6 +82,8 @@ public:
             obj->setToRender();
     }
 
+    void addSubobject(const std::shared_ptr<ISceneObject> &subobj) { subObjects.append(subobj); }
+
     ~CompositeSceneObject() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override {

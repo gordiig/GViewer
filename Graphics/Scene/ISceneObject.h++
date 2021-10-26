@@ -36,7 +36,9 @@ protected:
     virtual void setKa(double ka) = 0;
 
 public:
-    ISceneObject() { id = idCounter++; }
+    ISceneObject() : origin(), turnOrigin(), scaleOrigin(), angles(), sf(), material(nullptr), subObjects() {
+        id = idCounter++;
+    }
 
     ISceneObject(const ISceneObject &copy) = default;
     ISceneObject(ISceneObject &&move) noexcept = default;

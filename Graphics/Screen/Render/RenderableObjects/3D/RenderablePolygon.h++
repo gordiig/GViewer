@@ -78,8 +78,8 @@ protected:
         // Initializing some variables, that we are going to use later
         ScreenCoordinate screenCoordinate = ScreenCoordinate::zero();
         ScreenVertex screenVertex = ScreenVertex::zero();
-        size_t screenWidth = camera->getScreenWidth();
-        size_t screenHeight = camera->getScreenHeight();
+        size_t screenWidthHalf = camera->getScreenWidth() / 2;
+        size_t screenHeightHalf = camera->getScreenHeight() / 2;
 
         for (const auto &vtx : projectedVtxs) {
             // Getting position of current vtx
@@ -90,8 +90,8 @@ protected:
             // 2. Projected vtxs had positions, relative to the camera space (camera was at the center of Oxy),
             // but screen origin at the left top corner. Because of that we need to move projected vtx.
             // Z remains the same
-            screenCoordinate.x = screenWidth + (int) vtxPos.x;
-            screenCoordinate.y = screenHeight - (int) vtxPos.y;
+            screenCoordinate.x = screenWidthHalf + (int) vtxPos.x;
+            screenCoordinate.y = screenHeightHalf - (int) vtxPos.y;
             screenCoordinate.z = vtxPos.z;
 
             // Setting new position to screen vertex
@@ -130,23 +130,17 @@ public:
         PointTransformer::transform(v1.pos, origin,
                                     angles, turnOrigin,
                                     sf, scaleOrigin);
-        PointTransformer::transform(v1.vec, origin,
-                                    angles, turnOrigin,
-                                    sf, scaleOrigin);
+        PointTransformer::turn(v1.vec, angles, turnOrigin);
 
         PointTransformer::transform(v2.pos, origin,
                                     angles, turnOrigin,
                                     sf, scaleOrigin);
-        PointTransformer::transform(v2.vec, origin,
-                                    angles, turnOrigin,
-                                    sf, scaleOrigin);
+        PointTransformer::turn(v2.vec, angles, turnOrigin);
 
         PointTransformer::transform(v3.pos, origin,
                                     angles, turnOrigin,
                                     sf, scaleOrigin);
-        PointTransformer::transform(v3.vec, origin,
-                                    angles, turnOrigin,
-                                    sf, scaleOrigin);
+        PointTransformer::turn(v3.vec, angles, turnOrigin);
 
         vtxs = {v1, v2, v3};
     }

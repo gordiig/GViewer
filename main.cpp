@@ -34,6 +34,7 @@
 #include "Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++"
 
 #include "Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++"
+#include "Graphics/Scene/ConcreteObjects/Cameras/Camera.h++"
 
 #include "Graphics/Screen/Screen.h++"
 #include "Graphics/Screen/CameraPyramid.h++"
@@ -68,13 +69,14 @@
 #include "GUI/ScreenView.h++"
 #include "GUI/RightMenu.h++"
 #include "GUI/CoordsRow.h++"
+#include "GUI/Facade.h++"
 
 
 
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    MainWindow w(1280, 720, 900, 700);
+    MainWindow w(1280, 720, 100, 100);
 
     w.show();
     return QApplication::exec();

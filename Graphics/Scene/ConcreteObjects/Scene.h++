@@ -7,6 +7,7 @@
 
 #include "../CompositeSceneObject.h++"
 #include "../../Basics/RGBA.h++"
+#include "../../Screen/Render/IRenderer.h++"
 #include "../../../Settings/Settings.h++"
 
 class Scene: public CompositeSceneObject {

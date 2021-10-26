@@ -5,6 +5,7 @@
 #ifndef GVIEWER_MAINWINDOW_H
 #define GVIEWER_MAINWINDOW_H
 
+#include <iostream>
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -12,6 +13,7 @@
 #include <QLabel>
 #include "ScreenView.h++"
 #include "RightMenu.h++"
+#include "Facade.h++"
 
 
 class MainWindow: public QMainWindow {
@@ -20,9 +22,10 @@ class MainWindow: public QMainWindow {
 protected:
     ScreenView *sv;
     RightMenu *rightMenu;
+    Facade facade;
 
 public:
-    MainWindow(int width, int height, int screenWidth, int screenHeight) : QMainWindow() {
+    MainWindow(int width, int height, int screenWidth, int screenHeight) : QMainWindow(), facade(screenWidth, screenHeight) {
         setFixedWidth(width);
         setFixedHeight(height);
         setWindowTitle("GViewer");
@@ -52,6 +55,14 @@ public:
 //                         this, SLOT(ySpinBoxValueChangedSlot(int)));
 //        QObject::connect(rightMenu, SIGNAL(zChangedSignal(int)),
 //                         this, SLOT(zSpinBoxValueChangedSlot(int)));
+
+        // Initializing graphics
+//        try {
+            Screen scr = facade.render();
+            sv->setScreen(std::move(scr));
+//        } catch (const std::exception &e) {
+//            std::cout << e.what() << std::endl;
+//        }
     }
 
     ~MainWindow() override {

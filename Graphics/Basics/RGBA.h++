@@ -83,9 +83,9 @@ public:
 
     [[nodiscard]] RGBA blendThisAbove(const RGBA &rhs) const noexcept {
         double alphaPercent = (double) a / 256.0;
-        int r_ = std::max((int) ((double) r * alphaPercent + (1.0 - alphaPercent) * (double) rhs.r), 256);
-        int g_ = std::max((int) ((double) g * alphaPercent + (1.0 - alphaPercent) * (double) rhs.g), 256);
-        int b_ = std::max((int) ((double) b * alphaPercent + (1.0 - alphaPercent) * (double) rhs.b), 256);
+        int r_ = std::max((int) ((double) r * alphaPercent + (1.0 - alphaPercent) * (double) rhs.r), 255);
+        int g_ = std::max((int) ((double) g * alphaPercent + (1.0 - alphaPercent) * (double) rhs.g), 255);
+        int b_ = std::max((int) ((double) b * alphaPercent + (1.0 - alphaPercent) * (double) rhs.b), 255);
         return {r_, g_, b_, a};
     }
     [[nodiscard]] RGBA blendThisBelow(const RGBA &rhs) const noexcept { return rhs.blendThisAbove(*this); }

@@ -67,9 +67,11 @@ public:
             return EMPTY_SCREEN;
 
         // Getting screen size
-        const auto [leftTopPt, rightBottomPt] = sizeRectangleForScreen(screenVtxs);
-        size_t screenWidth = rightBottomPt.x - leftTopPt.x;
-        size_t screenHeight = rightBottomPt.y - leftTopPt.y;
+        const auto sizeRectForScreen = sizeRectangleForScreen(screenVtxs);
+        const auto& leftTopPt = sizeRectForScreen.first;
+        const auto& rightBottomPt = sizeRectForScreen.second;
+        size_t screenWidth = rightBottomPt.x - leftTopPt.x + 1;
+        size_t screenHeight = rightBottomPt.y - leftTopPt.y + 1;
         if (screenWidth == 0 || screenHeight == 0)
             return {0, 0, {0, 0}};
 
@@ -153,9 +155,8 @@ public:
                 ty = tyInterpolator.interpolate(xDouble);
                 z = zInterpolator.interpolate(xDouble);
 
-                // Subtracting width and height because we already have screen offset,
-                // so we need to start drawing from (0, 0)
-                screen.setPixelColor(x - screenWidth, sy - screenHeight, material.getColor(tx, ty, lightIntensity), z);
+                // Subtracting offset because we need to start drawing from (0, 0)
+                screen.setPixelColor(x - screenOffset.x, sy - screenOffset.y, material.getColor(tx, ty, lightIntensity), z);
             }
 
             // Changing first line and line interpolator if needed

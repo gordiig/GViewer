@@ -5,7 +5,7 @@
 #ifndef GVIEWER_IRENDERER_H
 #define GVIEWER_IRENDERER_H
 
-#include "../../../Basics/RGBA.h++"
+#include "../../Basics/RGBA.h++"
 #include "../../../Utils/BaseObject.h++"
 #include "../../../Utils/Containers/DynArray.h++"
 
