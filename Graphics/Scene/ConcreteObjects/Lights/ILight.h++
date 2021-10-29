@@ -14,8 +14,6 @@ class ILight: public BaseSceneObject {
 protected:
     unsigned short intensity = 128;
 
-    void setKa(double ka) override { }
-
 public:
     explicit ILight(unsigned short intensity = 128) : BaseSceneObject() { setIntensity(intensity); }
 
