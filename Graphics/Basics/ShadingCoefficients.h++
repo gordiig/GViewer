@@ -11,6 +11,7 @@
 class ShadingCoefficients: public BaseObject {
 protected:
     double kd = 0;
+    // Need to change
     double ka = 0;
 
 public:

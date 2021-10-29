@@ -13,6 +13,7 @@
 class Scene: public CompositeSceneObject {
 protected:
     RGBA backgroundColor;
+    double ka = 1.0;
 
 public:
     explicit Scene(RGBA bgColor = RGBA::black()) : CompositeSceneObject(), backgroundColor(std::move(bgColor)) { }
@@ -23,9 +24,7 @@ public:
     Scene& operator = (const Scene &copy) = default;
     Scene& operator = (Scene &&move) = default;
 
-    void setKa(double ka) override {
-        CompositeSceneObject::setKa(ka);
-    }
+    void setKa(double ka) { this->ka = ka; }
 
     [[nodiscard]] const RGBA &getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const RGBA &bgColor) { backgroundColor = bgColor; }

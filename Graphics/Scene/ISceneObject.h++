@@ -15,8 +15,6 @@ class IMaterial;
 
 
 class ISceneObject: public BaseObject {
-    friend class CompositeSceneObject;
-
 protected:
     Coordinate origin;
     Coordinate turnOrigin;
@@ -31,9 +29,6 @@ protected:
 
     static unsigned long long idCounter;
     unsigned long long id;
-
-    // Yeah, that's not good
-    virtual void setKa(double ka) = 0;
 
 public:
     ISceneObject() : origin(), turnOrigin(), scaleOrigin(), angles(), sf(), material(nullptr), subObjects() {

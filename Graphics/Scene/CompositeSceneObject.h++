@@ -14,12 +14,6 @@
 
 
 class CompositeSceneObject: public ISceneObject {
-protected:
-    void setKa(double ka) override {
-        for (auto& subObj : subObjects)
-            subObj->setKa(ka);
-    }
-
 public:
     CompositeSceneObject() : ISceneObject() { }
 
