@@ -1,5 +1,4 @@
 #include <QApplication>
-//#include <QPushButton>
 #include <iostream>
 
 #include "Exceptions/Exception.h++"
@@ -51,6 +50,7 @@
 #include "Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++"
 
 #include "Graphics/Screen/Render/Shaders/IShader.h++"
+#include "Graphics/Screen/Render/Shaders/SceletShader.h++"
 #include "Graphics/Screen/Render/Shaders/LambertShader.h++"
 #include "Graphics/Screen/Render/Shaders/GouraudShader.h++"
 #include "Graphics/Screen/Render/Shaders/PhongShader.h++"
@@ -72,11 +72,9 @@
 #include "GUI/Facade.h++"
 
 
-
 int main(int argc, char *argv[]) {
-
     QApplication a(argc, argv);
-    MainWindow w(1280, 720, 100, 100);
+    MainWindow w(1280, 720, 300, 200);
 
     w.show();
     return QApplication::exec();

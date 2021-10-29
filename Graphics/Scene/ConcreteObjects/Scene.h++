@@ -23,6 +23,10 @@ public:
     Scene& operator = (const Scene &copy) = default;
     Scene& operator = (Scene &&move) = default;
 
+    void setKa(double ka) override {
+        CompositeSceneObject::setKa(ka);
+    }
+
     [[nodiscard]] const RGBA &getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const RGBA &bgColor) { backgroundColor = bgColor; }
 

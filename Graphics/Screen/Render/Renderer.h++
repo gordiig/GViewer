@@ -40,12 +40,10 @@ public:
 
         // Initializing temp screen for every figure
         Screen currentFigureScreen{0, 0, {0, 0}};
-        int i = 0;
         for (const auto& figure : objectsToRender) {
             // Rendering current figure, and applying its screen to the main screen
             currentFigureScreen = figure->render();
             ans.apply(currentFigureScreen);
-            i++;
         }
 
         return ans;

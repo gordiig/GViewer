@@ -24,7 +24,7 @@ public:
            size_t height,
            const Point2<size_t, size_t>& offset,
            const RGBA &fillColor = RGBA::transparent()) noexcept :
-           bitmapWithDepth(height, width,  {fillColor, 0}), offset(offset) {
+           bitmapWithDepth(height, width,  {fillColor, 1'000'000'000}), offset(offset) {
     }
 
     Screen(const Screen &copy) noexcept = default;
@@ -54,10 +54,15 @@ public:
         long longX = (long) x;
         long longY = (long) y;
         auto& curColor = bitmapWithDepth[longY][longX];
+        RGBA resultColor;
 
-        RGBA resultColor = zIndex < curColor.second
-                ? color.blendThisAbove(curColor.first)
-                : color.blendThisBelow(curColor.first);
+        if (zIndex < curColor.second) {
+            bitmapWithDepth[longY][longX].second = zIndex;
+            resultColor = color.blendThisAbove(curColor.first);
+        } else {
+            resultColor = color.blendThisBelow(curColor.first);
+        }
+
         bitmapWithDepth[longY][longX].first = resultColor;
         return resultColor;
     }

@@ -37,12 +37,20 @@ protected:
 public:
     ScreenView(int width, int height, QWidget *parent = nullptr) :
             QGraphicsView(parent), gs(this), im(width, height, QImage::Format_ARGB32_Premultiplied), pixmapItem(nullptr) {
+        // Setting size and gs
         setFixedWidth(width);
         setFixedHeight(height);
         this->setScene(&gs);
 
+        // Filling screen with black color on init
         im.fill(QColor(0, 0, 0));
         updateGraphicsScene();
+
+        // Removing scrolls
+        const auto& rcontent = this->contentsRect();
+        this->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 
     ScreenView(const ScreenView &copy) = delete;
