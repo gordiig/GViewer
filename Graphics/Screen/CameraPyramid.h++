@@ -109,7 +109,7 @@ protected:
 
             // Cutting if needed
             if (v1InsideV2Outside || v2InsideV1Outside) {
-                k = 1 - planeNorm.scalarMultiply(v1.pos) / planeNorm.scalarMultiply(v2.pos);
+                k = 1 - planeNorm.scalarMultiply(v2.pos) / planeNorm.scalarMultiply(v1.pos);
                 Vertex newVertex = createNewVertexOnCut(v1, v2, k);
                 ans.append(newVertex);
             }
@@ -129,6 +129,7 @@ public:
         const double screenHeightHalf = (double) camera.getScreenHeight() / 2;
 
         // Calculating coordinates for pyramid planes
+        const Coordinate coordForFirstPlane{0, 0, cameraZ + distFromCameraToScreen};
         const Coordinate coordForPlanes{0, 0, cameraZ};
 
         // Initializing norms for all planes
@@ -139,7 +140,7 @@ public:
         const Vector rightNorm(-distFromCameraToScreen, 0, screenWidthHalf);
 
         // Initializing planes with coordinate and unit norm vectors
-        screenPlane = Plane{coordForPlanes, screenNorm};
+        screenPlane = Plane{coordForFirstPlane, screenNorm};
         topPlane = Plane{coordForPlanes, topNorm.normalized()};
         bottomPlane = Plane{coordForPlanes, bottomNorm.normalized()};
         rightPlane = Plane{coordForPlanes, rightNorm.normalized()};

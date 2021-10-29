@@ -41,7 +41,7 @@ protected:
     }
     [[nodiscard]] static Interpolator getZInterpolatorByY(const VertexLine &line) {
         const auto& lineStartPos = line.first.pos;
-        const auto& lineEndPos = line.first.pos;
+        const auto& lineEndPos = line.second.pos;
 
         auto lineStartY = (double) lineStartPos.y;
         auto lineEndY = (double) lineEndPos.y;
@@ -102,14 +102,19 @@ protected:
 
     [[nodiscard]] static size_t getXForLine(const ScreenCoordinate& bottomPtPos, const ScreenCoordinate& topPtPos,
                                             const size_t currentY) noexcept {
-        size_t ans;
+        long ans;
+        long curYLong = (long) currentY;
+        long bottomX = (long) bottomPtPos.x;
+        long bottomY = (long) bottomPtPos.y;
+        long topX = (long) topPtPos.x;
+        long topY = (long) topPtPos.y;
 
-        if (bottomPtPos.y == topPtPos.y)
-            ans = bottomPtPos.x;
+        if (bottomY == topY)
+            ans = topX;
         else
-            ans = bottomPtPos.x + (currentY - topPtPos.y) * (bottomPtPos.x - topPtPos.x) / (bottomPtPos.y - topPtPos.y);
+            ans = topX + (curYLong - topY) * (bottomX - topX) / (bottomY - topY);
 
-        return ans;
+        return (size_t) ans;
     }
 
     unsigned short getIntensityForVtx(const Vertex &vtx) {

@@ -61,7 +61,6 @@ public:
 
     Polygon(Vertex v1, Vertex v2, Vertex v3) :
             BaseSceneObject(), v1(std::move(v1)), v2(std::move(v2)), v3(std::move(v3)) {
-        origin = turnOrigin = scaleOrigin = (v1.pos + v2.pos + v3.pos) / 3.0;
     }
 
     Polygon(const Polygon &copy) = default;

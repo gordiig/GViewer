@@ -21,7 +21,8 @@ private:
     double _depth;
 
 public:
-    Box(const Coordinate &leftTopClosest, double width, double height, double depth) noexcept : CompositeSceneObject() {
+    Box(double width, double height, double depth) noexcept : CompositeSceneObject() {
+        const Coordinate leftTopClosest = {-width / 2.0, height / 2.0, -depth / 2.0};
         const double oneThird = 1.0 / 3.0;
         const double twoThirds = 2.0 / 3.0;
 
@@ -29,28 +30,23 @@ public:
         _height = height;
         _depth = depth;
 
-        origin = turnOrigin = scaleOrigin = Coordinate(
-                (leftTopClosest.x + width) / 2.0,
-                (leftTopClosest.y - height) / 2.0,
-                (leftTopClosest.z + depth) / 2.0);
-
         SingleSidePlane oXYClosestPlane = SingleSidePlane::oXY(
                 leftTopClosest,
                 width,
                 height,
                 false);
         SingleSidePlane oXYDeepestPlane = SingleSidePlane::oXY(
-                Coordinate(leftTopClosest.x, leftTopClosest.y, leftTopClosest.z + depth),
+                {leftTopClosest.x, leftTopClosest.y, leftTopClosest.z + depth},
                 width,
                 height,
                 true);
         SingleSidePlane oXZTopPlane = SingleSidePlane::oXZ(
-                Coordinate(leftTopClosest.x, leftTopClosest.y, leftTopClosest.z + depth),
+                {leftTopClosest.x, leftTopClosest.y, leftTopClosest.z + depth},
                 width,
                 depth,
                 true);
         SingleSidePlane oXZBottomPlane = SingleSidePlane::oXZ(
-                Coordinate(leftTopClosest.x, leftTopClosest.y - height, leftTopClosest.z + depth),
+                {leftTopClosest.x, leftTopClosest.y - height, leftTopClosest.z + depth},
                 width,
                 depth,
                 false);
@@ -60,41 +56,23 @@ public:
                 height,
                 false);
         SingleSidePlane oYZRightPlane = SingleSidePlane::oYZ(
-                Coordinate(leftTopClosest.x + width, leftTopClosest.y, leftTopClosest.z),
+                {leftTopClosest.x + width, leftTopClosest.y, leftTopClosest.z},
                 depth,
                 height,
                 true);
 
-        oXYClosestPlane.setTextureCoordinates(
-                TX(0.25, oneThird),
-                TX(0, oneThird),
-                TX(0, twoThirds),
-                TX(0.25, twoThirds));
-        oXZTopPlane.setTextureCoordinates(
-                TX(0.5, oneThird),
-                TX(0.25, oneThird),
-                TX(0.25, twoThirds),
-                TX(0.5, twoThirds));
-        oXYDeepestPlane.setTextureCoordinates(
-                TX(0.75, oneThird),
-                TX(0.5, oneThird),
-                TX(0.5, twoThirds),
-                TX(0.75, twoThirds));
-        oXZBottomPlane.setTextureCoordinates(
-                TX(0.75, oneThird),
-                TX(1, oneThird),
-                TX(1, twoThirds),
-                TX(0.75, twoThirds));
-        oYZLeftPlane.setTextureCoordinates(
-                TX(0.25, oneThird),
-                TX(0.25, 0),
-                TX(0.5, 0),
-                TX(0.5, oneThird));
-        oYZRightPlane.setTextureCoordinates(
-                TX(0.25, twoThirds),
-                TX(0.25, 1),
-                TX(0.5, 1),
-                TX(0.5, twoThirds));
+        oXYClosestPlane.setTextureCoordinates(TX(0.25, oneThird), TX(0, oneThird),
+                                              TX(0, twoThirds),TX(0.25, twoThirds));
+        oXZTopPlane.setTextureCoordinates(TX(0.5, oneThird), TX(0.25, oneThird),
+                                          TX(0.25, twoThirds),TX(0.5, twoThirds));
+        oXYDeepestPlane.setTextureCoordinates(TX(0.75, oneThird), TX(0.5, oneThird),
+                                              TX(0.5, twoThirds),TX(0.75, twoThirds));
+        oXZBottomPlane.setTextureCoordinates(TX(0.75, oneThird), TX(1, oneThird),
+                                             TX(1, twoThirds),TX(0.75, twoThirds));
+        oYZLeftPlane.setTextureCoordinates(TX(0.25, oneThird), TX(0.25, 0),
+                                           TX(0.5, 0),TX(0.5, oneThird));
+        oYZRightPlane.setTextureCoordinates(TX(0.25, twoThirds), TX(0.25, 1),
+                                            TX(0.5, 1), TX(0.5, twoThirds));
 
         subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXYClosestPlane)));
         subObjects.append(std::make_shared<SingleSidePlane>(std::move(oXYDeepestPlane)));

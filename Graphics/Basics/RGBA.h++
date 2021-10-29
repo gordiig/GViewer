@@ -42,12 +42,12 @@ public:
         return *this;
     }
 
-    static RGBA white() noexcept { return {1, 1, 1, 0}; }
-    static RGBA black() noexcept { return {0, 0, 0, 0}; }
-    static RGBA red() noexcept { return {1, 0, 0, 0}; }
-    static RGBA green() noexcept { return {0, 1, 0, 0}; }
-    static RGBA blue() noexcept { return {0, 0, 1, 0}; }
-    static RGBA transparent() noexcept { return {0, 0, 0, 1}; }
+    static RGBA white() noexcept { return {255, 255, 255, 255}; }
+    static RGBA black() noexcept { return {0, 0, 0, 255}; }
+    static RGBA red() noexcept { return {255, 0, 0, 255}; }
+    static RGBA green() noexcept { return {0, 255, 0, 255}; }
+    static RGBA blue() noexcept { return {0, 0, 255, 255}; }
+    static RGBA transparent() noexcept { return {0, 0, 0, 0}; }
 
     ~RGBA() noexcept override = default;
 
@@ -82,11 +82,12 @@ public:
     }
 
     [[nodiscard]] RGBA blendThisAbove(const RGBA &rhs) const noexcept {
-        double alphaPercent = (double) a / 256.0;
-        int r_ = std::max((int) ((double) r * alphaPercent + (1.0 - alphaPercent) * (double) rhs.r), 256);
-        int g_ = std::max((int) ((double) g * alphaPercent + (1.0 - alphaPercent) * (double) rhs.g), 256);
-        int b_ = std::max((int) ((double) b * alphaPercent + (1.0 - alphaPercent) * (double) rhs.b), 256);
-        return {r_, g_, b_, a};
+        double alphaPercent = (double) a / 255.0;
+        int r_ = std::min((int) ((double) r * alphaPercent + (1.0 - alphaPercent) * (double) rhs.r), 255);
+        int g_ = std::min((int) ((double) g * alphaPercent + (1.0 - alphaPercent) * (double) rhs.g), 255);
+        int b_ = std::min((int) ((double) b * alphaPercent + (1.0 - alphaPercent) * (double) rhs.b), 255);
+        int a_ = std::min((int) ((double) a * alphaPercent + (1.0 - alphaPercent) * (double) rhs.a), 255);
+        return {r_, g_, b_, a_};
     }
     [[nodiscard]] RGBA blendThisBelow(const RGBA &rhs) const noexcept { return rhs.blendThisAbove(*this); }
 
@@ -103,9 +104,9 @@ public:
         return ans;
     }
 
-    [[nodiscard]] bool isTransparent() const noexcept { return a == 1; }
-    [[nodiscard]] bool isKindaTransparent() const noexcept { return a > 0; }
-    [[nodiscard]] bool isOpaque() const noexcept { return a == 0; }
+    [[nodiscard]] bool isTransparent() const noexcept { return a == 0; }
+    [[nodiscard]] bool isKindaTransparent() const noexcept { return a < 255; }
+    [[nodiscard]] bool isOpaque() const noexcept { return a == 255; }
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;

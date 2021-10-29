@@ -1,5 +1,4 @@
-//#include <QApplication>
-//#include <QPushButton>
+#include <QApplication>
 #include <iostream>
 
 #include "Exceptions/Exception.h++"
@@ -27,12 +26,14 @@
 
 #include "Graphics/Scene/ConcreteObjects/SingleSidePlane.h++"
 #include "Graphics/Scene/ConcreteObjects/Box.h++"
+#include "Graphics/Scene/ConcreteObjects/Scene.h++"
 
 #include "Graphics/Scene/ConcreteObjects/Lights/ILight.h++"
 #include "Graphics/Scene/ConcreteObjects/Lights/DotLight.h++"
 #include "Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++"
 
 #include "Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++"
+#include "Graphics/Scene/ConcreteObjects/Cameras/Camera.h++"
 
 #include "Graphics/Screen/Screen.h++"
 #include "Graphics/Screen/CameraPyramid.h++"
@@ -49,6 +50,7 @@
 #include "Graphics/Screen/Render/RenderableObjects/Lights/RenderableDotLight.h++"
 
 #include "Graphics/Screen/Render/Shaders/IShader.h++"
+#include "Graphics/Screen/Render/Shaders/SceletShader.h++"
 #include "Graphics/Screen/Render/Shaders/LambertShader.h++"
 #include "Graphics/Screen/Render/Shaders/GouraudShader.h++"
 #include "Graphics/Screen/Render/Shaders/PhongShader.h++"
@@ -63,13 +65,19 @@
 #include "Utils/Containers/Matrix.h++"
 #include "Utils/Containers/Pair.h++"
 
+#include "GUI/MainWindow.h++"
+#include "GUI/ScreenView.h++"
+#include "GUI/RightMenu.h++"
+#include "GUI/CoordsRow.h++"
+#include "GUI/Facade.h++"
 
 
 int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
+    MainWindow w(1280, 720, 300, 200);
 
-    DotLight light(10);
-
-    return 0;
+    w.show();
+    return QApplication::exec();
 
 //    QApplication a(argc, argv);
 //    QPushButton button("Hello world!", nullptr);

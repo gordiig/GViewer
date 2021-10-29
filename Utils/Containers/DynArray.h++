@@ -32,7 +32,7 @@ public:
 
     T &operator[](long idx) {
         if (idx < 0)
-            idx = count() - idx;
+            idx = count() + idx;
 
         try {
             // stl does not throws on [] (WTF)
@@ -43,7 +43,7 @@ public:
     }
     const T &operator[](long idx) const {
         if (idx < 0)
-            idx = count() - idx;
+            idx = count() + idx;
         try {
             // stl does not throws on [] (WTF)
             return vec.at(idx);
@@ -80,6 +80,16 @@ public:
 
     void reserve(size_t val) { vec.reserve(val); }
 
+    void removeAt(long idx) {
+        if (idx < 0)
+            idx = count() + idx;
+
+        try {
+            vec.erase(vec.begin() + idx);
+        } catch (std::out_of_range &exc) {
+            throw IndexError(EXC_PARAMS, exc);
+        }
+    }
     void clear() noexcept { vec.clear(); }
 
     [[nodiscard]] std::string toString() const override {

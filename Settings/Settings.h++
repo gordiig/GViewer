@@ -41,12 +41,12 @@ public:
     [[nodiscard]] IShader& getShader() const { return *currentShader; }
     [[nodiscard]] CameraPyramid& getCameraPyramid() { return *cameraPyramid; };
 
-    void setRenderer(std::shared_ptr<IRenderer> &&newRenderer) { this->renderer = std::move(newRenderer); }
-    void setCamera(std::shared_ptr<ICamera> &&newCamera) {
-        this->cameraPyramid = std::make_unique<CameraPyramid>(CameraPyramid(*newCamera));
-        this->currentCamera = std::move(newCamera);
+    void setRenderer(const std::shared_ptr<IRenderer> &newRenderer) { this->renderer = newRenderer; }
+    void setCamera(const std::shared_ptr<ICamera> &newCamera) {
+        this->cameraPyramid = std::make_shared<CameraPyramid>(CameraPyramid(*newCamera));
+        this->currentCamera = newCamera;
     }
-    void setShader(std::shared_ptr<IShader> &&newShader) { this->currentShader = std::move(newShader); }
+    void setShader(const std::shared_ptr<IShader> &newShader) { this->currentShader = newShader; }
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;
