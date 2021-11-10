@@ -16,6 +16,7 @@
 class CameraPyramid: public BaseObject {
 protected:
     using Plane = Pair<Coordinate, Vector>;
+    using Line = Pair<Vertex, Vertex>;
 
     Plane screenPlane = {{}, {}};
     Plane topPlane = {{}, {}};
@@ -23,6 +24,13 @@ protected:
     Plane leftPlane = {{}, {}};
     Plane rightPlane = {{}, {}};
 
+    /**
+     * Creation of the new vertex, that located between two given
+     * @param vtx1 Start vertex
+     * @param vtx2 End vertex
+     * @param k Parameter in interval of [0, 1]. Same as parameter in parametrized line equation
+     * @return New vertex
+     */
     [[nodiscard]] static Vertex createNewVertexOnCut(const Vertex &vtx1, const Vertex &vtx2, double k) noexcept {
         // Initializing ans vertex
         Vertex ans = Vertex::zero();
@@ -68,7 +76,47 @@ protected:
         return ans;
     }
 
-    [[nodiscard]] DynArray<Vertex> cutByPlane(const Plane& plane, const DynArray<Vertex> vtxs) const noexcept {
+    /**
+     * Function for calculating vertex on the point of the intersection between line and plane
+     * Constraints, which are true for this class and this specific usage:
+     * 1. Line is definitely intersects with plane
+     * 2. Line is definitely not a point
+     * @param line Line (pair of 2 vertixes)
+     * @param plane Plane (pair of point and norm)
+     * @return Vertex in the point of the intersection
+     */
+    [[nodiscard]] static Vertex findIntersectedVertex(const Line& line, const Plane& plane) noexcept {
+        // Getting values from containers
+        const auto& planeCoord = plane.first;
+        const auto& planeNorm = plane.second;
+        const auto& startPos = line.first.pos;
+        const auto& endPos = line.second.pos;
+
+        // Calculating A, B, C, D for canonic plane equation Ax + By + Cz + D = 0
+        // TODO wrap it to geometry plane class
+        const double a = planeNorm.x;
+        const double b = planeNorm.y;
+        const double c = planeNorm.z;
+        const double d = -(planeNorm.x * planeCoord.x + planeNorm.y * planeCoord.y + planeNorm.z * planeCoord.z);
+
+        // Calculating p for parametric line equation x = xs + (xe - xs) * p (same for y and z)
+        const double deltaX = endPos.x - startPos.x;
+        const double deltaY = endPos.y - startPos.y;
+        const double deltaZ = endPos.z - startPos.z;
+        const double numerator = -(a * startPos.x + b * startPos.y + c * startPos.z + d);
+        const double denominator = a * deltaX + b * deltaY + c * deltaZ;
+        const double p = numerator / denominator;
+
+        return createNewVertexOnCut(line.first, line.second, p);
+    }
+
+    /**
+     * Cutting figure by the given plane
+     * @param plane Plane, that cuts the figure
+     * @param vtxs Figure
+     * @return Cutted figure
+     */
+    [[nodiscard]] static DynArray<Vertex> cutByPlane(const Plane& plane, const DynArray<Vertex>& vtxs) noexcept {
         // If no points given — return
         if (vtxs.isEmpty())
             return vtxs;
@@ -109,8 +157,7 @@ protected:
 
             // Cutting if needed
             if (v1InsideV2Outside || v2InsideV1Outside) {
-                k = 1 - planeNorm.scalarMultiply(v2.pos) / planeNorm.scalarMultiply(v1.pos);
-                Vertex newVertex = createNewVertexOnCut(v1, v2, k);
+                Vertex newVertex = findIntersectedVertex({v1, v2}, plane);
                 ans.append(newVertex);
             }
         }
@@ -132,19 +179,31 @@ public:
         const Coordinate coordForFirstPlane{0, 0, cameraZ + distFromCameraToScreen};
         const Coordinate coordForPlanes{0, 0, cameraZ};
 
+        // Calculating angle tan for Oyz and Oxz
+        const double ky = abs(cameraZ / screenHeightHalf);
+        const double kx = abs(cameraZ / screenWidthHalf);
+
         // Initializing norms for all planes
-        const Vector screenNorm(0, 0, 1);
-        const Vector topNorm(0, -distFromCameraToScreen, screenHeightHalf);
-        const Vector bottomNorm(0, distFromCameraToScreen, screenHeightHalf);
-        const Vector leftNorm(-distFromCameraToScreen, 0, screenWidthHalf);
-        const Vector rightNorm(-distFromCameraToScreen, 0, screenWidthHalf);
+        // When line's function is written as Ay + Bx + C = 0, norm is (B, A)
+        // For example, take top plane on Oyz:
+        // Two coordinates of line on x = 0 cut are (screenHeightHalf, 0) and (0, camZ)
+        // So, equation for this line is z = ky * x + camZ
+        // Which is equal to -ky * x + z - camZ = 0
+        // So, norm to this line is (-ky, 1)
+        // But, there are 2 norms for 1 line -- outer and inner
+        // We now, that (-ky, 1) is inner, because our camera is looking to the +Z
+        const Vector screenNorm(.0, .0, 1.0);
+        const Vector topNorm(.0, -ky, 1.0);
+        const Vector bottomNorm(.0, ky, 1.0);
+        const Vector leftNorm(kx, .0, 1.0);
+        const Vector rightNorm(-kx, .0, 1.0);
 
         // Initializing planes with coordinate and unit norm vectors
         screenPlane = Plane{coordForFirstPlane, screenNorm};
-        topPlane = Plane{coordForPlanes, topNorm.normalized()};
-        bottomPlane = Plane{coordForPlanes, bottomNorm.normalized()};
-        rightPlane = Plane{coordForPlanes, rightNorm.normalized()};
-        leftPlane = Plane{coordForPlanes, leftNorm.normalized()};
+        topPlane = Plane{coordForPlanes, topNorm};
+        bottomPlane = Plane{coordForPlanes, bottomNorm};
+        rightPlane = Plane{coordForPlanes, rightNorm};
+        leftPlane = Plane{coordForPlanes, leftNorm};
     }
 
     CameraPyramid(const CameraPyramid &copy) noexcept = default;
@@ -153,6 +212,11 @@ public:
     CameraPyramid& operator = (const CameraPyramid &copy) noexcept = default;
     CameraPyramid& operator = (CameraPyramid &&move) noexcept = default;
 
+    /**
+     * Cutting figure with the camera pyramid
+     * @param obj Uncutted figure
+     * @return Cutted figure
+     */
     [[nodiscard]] DynArray<Vertex> cutObject(const DynArray<Vertex> &obj) const {
         // Cutting figure with all planes
         auto cuttedByScreenPlane = cutByPlane(screenPlane, obj);
@@ -168,5 +232,6 @@ public:
 
     [[nodiscard]] std::string toString() const override { return "[CameraPyramid]"; }
 };
+
 
 #endif //GVIEWER_CAMERAPYRAMID_H

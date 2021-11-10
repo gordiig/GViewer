@@ -19,7 +19,7 @@ protected:
     size_t screenHeight;
 
 public:
-    ICamera(size_t screenWidth, size_t screenHeight) noexcept : screenWidth(screenWidth), screenHeight(screenHeight) {}
+    ICamera(size_t screenWidth, size_t screenHeight) noexcept : screenWidth(screenWidth - 1), screenHeight(screenHeight - 1) {}
 
     ICamera(const ICamera &copy) noexcept = default;
     ICamera(ICamera &&move) noexcept = default;

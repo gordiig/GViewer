@@ -5,6 +5,7 @@
 #ifndef GVIEWER_ISCENEOBJECT_H
 #define GVIEWER_ISCENEOBJECT_H
 
+#include <memory>
 #include "../../Utils/Containers/DynArray.h++"
 #include "../../Geometry/Basics/Point3.h++"
 #include "../../Geometry/Basics/Vector.h++"

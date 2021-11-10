@@ -74,7 +74,8 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    MainWindow w(1280, 720, 300, 200);
+
+    MainWindow w(1280, 720, 250, 250);
 
     w.show();
     return QApplication::exec();
