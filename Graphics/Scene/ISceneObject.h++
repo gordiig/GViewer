@@ -5,6 +5,7 @@
 #ifndef GVIEWER_ISCENEOBJECT_H
 #define GVIEWER_ISCENEOBJECT_H
 
+#include <memory>
 #include "../../Utils/Containers/DynArray.h++"
 #include "../../Geometry/Basics/Point3.h++"
 #include "../../Geometry/Basics/Vector.h++"
@@ -15,8 +16,6 @@ class IMaterial;
 
 
 class ISceneObject: public BaseObject {
-    friend class CompositeSceneObject;
-
 protected:
     Coordinate origin;
     Coordinate turnOrigin;
@@ -31,9 +30,6 @@ protected:
 
     static unsigned long long idCounter;
     unsigned long long id;
-
-    // Yeah, that's not good
-    virtual void setKa(double ka) = 0;
 
 public:
     ISceneObject() : origin(), turnOrigin(), scaleOrigin(), angles(), sf(), material(nullptr), subObjects() {

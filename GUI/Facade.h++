@@ -49,7 +49,7 @@ public:
 
         // Adding box to the scene
         std::shared_ptr<ISceneObject> box = std::make_shared<Box>(Box(150, 150, 5));
-        Coordinate newBoxOrigin = {150, 0, 6};
+        Coordinate newBoxOrigin = {0, 0, 6};
         box->moveTo(newBoxOrigin);
         box->setTurnOrigin(newBoxOrigin);
         box->setScaleOrigin(newBoxOrigin);
@@ -58,14 +58,15 @@ public:
         scene.addSubobject(box);
 
         // Adding poly
+//        double x = 300;
 //        Vertex v1 = Vertex::zero();
-//        v1.pos = {0, -300, 150};
+//        v1.pos = {x, 100, 0};
 //        Vertex v2 = Vertex::zero();
-//        v2.pos = {150, 100, 0};
+//        v2.pos = {x, 0, 0};
 //        Vertex v3 = Vertex::zero();
 //        v3.pos = {0, 0, 0};
 //        std::shared_ptr<ISceneObject> box = std::make_shared<Polygon>(Polygon(v1, v2, v3));
-//        Coordinate newBoxOrigin = {0, 0, 10};
+//        Coordinate newBoxOrigin = {0, 0, 5};
 //        box->moveTo(newBoxOrigin);
 //        box->setTurnOrigin(newBoxOrigin);
 //        box->setScaleOrigin(newBoxOrigin);

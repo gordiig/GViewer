@@ -50,12 +50,6 @@ protected:
         return {minX, minY, minZ};
     }
 
-    void setKa(double ka) override {
-        v1.sc.setKa(ka);
-        v2.sc.setKa(ka);
-        v3.sc.setKa(ka);
-    }
-
 public:
     Polygon() = delete;
 
