@@ -43,8 +43,7 @@ struct Vector: public Point3<double, double, double> {
     [[nodiscard]] double cosBetweenVectors(const Vector &vec) const {
         if (doubleEq(length(), 0) || doubleEq(vec.length(), 0))
             throw DivideByZeroError(EXC_PARAMS, "Cos error — both vectors lengths are zero");
-
-        double ans = this->scalarMultiply(vec) / (this->length() + vec.length());
+        double ans = this->scalarMultiply(vec) / (this->length() * vec.length());
         return ans;
     }
 

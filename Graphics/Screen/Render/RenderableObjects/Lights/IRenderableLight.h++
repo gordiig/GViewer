@@ -25,7 +25,7 @@ protected:
     void cutByCameraPyramid() override { }
     void projectToScreen() override { }
     void transformToScreenSpace() override { }
-    Screen drawObject() override { return {0, 0, {0, 0}}; }
+    Screen drawObject() override { return EMPTY_SCREEN; }
 
 public:
     const static unsigned short MAX_INTENSITY;
@@ -44,7 +44,7 @@ public:
     virtual unsigned short getIntensity(const Vertex &vertex) = 0;
 
     // Do not draw lights yet
-    Screen render() override { return {0, 0, {0, 0}}; }
+    Screen render() override { return EMPTY_SCREEN; }
 
     ~IRenderableLight() noexcept override = default;
 

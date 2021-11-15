@@ -10,9 +10,10 @@
 #include "../Graphics/Scene/ConcreteObjects/Scene.h++"
 #include "../Graphics/Scene/ConcreteObjects/Box.h++"
 #include "../Graphics/Scene/ConcreteObjects/Lights/AmbientLight.h++"
+#include "../Graphics/Scene/ConcreteObjects/Lights/DotLight.h++"
 #include "../Graphics/Scene/ConcreteObjects/Cameras/ICamera.h++"
 #include "../Graphics/Scene/ConcreteObjects/Cameras/Camera.h++"
-//#include "../Graphics/Screen/Render/Shaders/LambertShader.h++"
+#include "../Graphics/Screen/Render/Shaders/LambertShader.h++"
 #include "../Graphics/Screen/Render/Shaders/SceletShader.h++"
 #include "../Graphics/Screen/Render/IRenderer.h++"
 #include "../Graphics/Screen/Render/Renderer.h++"
@@ -35,12 +36,14 @@ public:
 
         // Adding camera to settings and scene
         camera = std::make_shared<Camera>(Camera(screenWidth, screenHeight));
+        camera->scale(ScaleFactor(20.0, 20.0, 1));
 //        camera->moveTo({0, 50, 0});
         settings.setCamera(camera);
         scene.addSubobject(camera);
 
         // Adding shader to settings
-        std::shared_ptr<IShader> shader = std::make_shared<SceletShader>(SceletShader());
+//        std::shared_ptr<IShader> shader = std::make_shared<SceletShader>(SceletShader());
+        std::shared_ptr<IShader> shader = std::make_shared<LambertShader>(LambertShader());
         settings.setShader(shader);
 
         // Adding Renderer to settings
@@ -48,8 +51,8 @@ public:
         settings.setRenderer(renderer);
 
         // Adding box to the scene
-        std::shared_ptr<ISceneObject> box = std::make_shared<Box>(Box(150, 150, 5));
-        Coordinate newBoxOrigin = {0, 0, 6};
+        std::shared_ptr<ISceneObject> box = std::make_shared<Box>(Box(10, 10, 5));
+        Coordinate newBoxOrigin = {-10, 0, 5};
         box->moveTo(newBoxOrigin);
         box->setTurnOrigin(newBoxOrigin);
         box->setScaleOrigin(newBoxOrigin);
@@ -75,7 +78,8 @@ public:
 //        scene.addSubobject(box);
 
         // Adding ambient light to the scene
-        std::shared_ptr<ISceneObject> light = std::make_shared<AmbientLight>(AmbientLight(128));
+//        std::shared_ptr<ISceneObject> light = std::make_shared<AmbientLight>(AmbientLight(128));
+        std::shared_ptr<ISceneObject> light = std::make_shared<DotLight>(DotLight(255));
         scene.addSubobject(light);
 
         scene.setKa(0.2);

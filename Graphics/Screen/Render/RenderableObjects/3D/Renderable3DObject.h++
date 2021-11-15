@@ -18,12 +18,14 @@ protected:
     using VertexLine = Pair<ScreenVertex, ScreenVertex>;
 
     DynArray<Vertex> vtxs;
+    DynArray<Vertex> vtxsInCameraSpace;
+    DynArray<Vertex> vtxsCuttedByCameraPyramid;
     DynArray<Vertex> projectedVtxs;
     DynArray<ScreenVertex> screenVtxs;
 
 public:
     explicit Renderable3DObject(const DynArray<Vertex> &vtxs) :
-            IRenderable(), vtxs(vtxs), projectedVtxs(), screenVtxs() {
+            IRenderable(), vtxs(vtxs), vtxsInCameraSpace(), vtxsCuttedByCameraPyramid(), projectedVtxs(), screenVtxs() {
     }
 
     Renderable3DObject(const Renderable3DObject &copy) = default;

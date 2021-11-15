@@ -25,39 +25,45 @@ protected:
         const auto &cameraOrigin = camera->getOrigin();
         const auto cameraOriginNeg = -cameraOrigin;
         const auto &cameraAnglesNeg = -camera->getAngles();
+        const auto &cameraScales = camera->getSf();
 
-        for (auto &vtx : vtxs) {
+        // Reserving memory for vtxs in camera space array
+        vtxsInCameraSpace.reserve(vtxs.count());
+
+        for (const auto &vtx : vtxs) {
             // Getting position and norm vector of current vertex
-            auto &vtxCoord = vtx.pos;
-            auto &vtxVec = vtx.vec;
+            Vertex newVertex(vtx);
+            auto& newVertexPos = newVertex.pos;
+            auto& newVertexVec = newVertex.vec;
 
-            // Moving vertex and vector in mirrored direction of camera origin
-            // If camera moves to the left — object will move right on the screen
-            PointTransformer::move(vtxCoord, cameraOriginNeg);
-            PointTransformer::move(vtxVec, cameraOriginNeg);
+            // Moving, turning and scaling vertex and vector in mirrored direction of camera origin
+            // If camera moves or turn to the left — object will move right on the screen, but for scale it's not neg
+            PointTransformer::transform(newVertexPos, cameraOriginNeg,
+                                        cameraAnglesNeg, cameraOrigin,
+                                        cameraScales, cameraOrigin);
+            PointTransformer::transform(newVertexVec, cameraOriginNeg,
+                                        cameraAnglesNeg, cameraOrigin,
+                                        cameraScales, cameraOrigin);
 
-            // Turning vertex and vector in mirrored angles of camera
-            // Same principle here
-            PointTransformer::turn(vtxCoord, cameraAnglesNeg, cameraOrigin);
-            PointTransformer::turn(vtxVec, cameraAnglesNeg, cameraOrigin);
+            vtxsInCameraSpace.append(newVertex);
         }
     }
 
     void cutByCameraPyramid() override {
         Settings& settings = Settings::getInstance();
         CameraPyramid& cameraPyramid = settings.getCameraPyramid();
-        vtxs = cameraPyramid.cutObject(vtxs);
+        vtxsCuttedByCameraPyramid = cameraPyramid.cutObject(vtxsInCameraSpace);
     }
 
     void projectToScreen() override {
         // Reserving space for projected vertixes — same amount as cutted
-        projectedVtxs.reserve(vtxs.count());
+        projectedVtxs.reserve(vtxsCuttedByCameraPyramid.count());
 
         // Initializing needed variables
         const double distanceFromCameraToScreen = camera->getScreenDistanceFromCamera();
         Vertex appendee = Vertex::zero();
 
-        for (const auto &vtx : vtxs) {
+        for (const auto &vtx : vtxsCuttedByCameraPyramid) {
             // Getting needed positions from current vtx, and initializing denominator for perspective
             const auto &vtxPos = vtx.pos;
             const double absZ = abs(vtxPos.z);

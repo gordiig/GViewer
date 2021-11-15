@@ -94,7 +94,7 @@ public:
     [[nodiscard]] RGBA applyIntensity(const size_t intensity, const bool applyForAlpha = false) const noexcept {
         RGBA ans;
         const auto& doubleIntensity = (double) intensity;
-        const double intensityMultiplier = 255.0 / doubleIntensity;
+        const double intensityMultiplier = doubleIntensity / 255.0;
 
         ans.r = (int) ((double) r * intensityMultiplier);
         ans.g = (int) ((double) g * intensityMultiplier);

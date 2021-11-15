@@ -25,7 +25,7 @@ public:
 
     [[nodiscard]] RGBA getColor(double x, double y, size_t intensity) const override {
         RGBA ansColor = color.applyIntensity(intensity);
-        return color;
+        return ansColor;
     }
 
     [[nodiscard]] std::shared_ptr<IMaterial> copyShared() const override {

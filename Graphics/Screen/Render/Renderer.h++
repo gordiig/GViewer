@@ -40,6 +40,8 @@ public:
 
         // Initializing temp screen for every figure
         Screen currentFigureScreen{0, 0, {0, 0}};
+//        for (int i = 0; i < objectsToRender.count(); i++) {
+//            const auto& figure = objectsToRender[i];
         for (const auto& figure : objectsToRender) {
             // Rendering current figure, and applying its screen to the main screen
             currentFigureScreen = figure->render();

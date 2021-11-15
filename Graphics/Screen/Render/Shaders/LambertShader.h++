@@ -21,8 +21,8 @@ class LambertShader: public IShader {
 protected:
     [[nodiscard]] static Vertex getAvgVtxForLighting(const DynArray<Vertex> &figure) {
         // Initializing variables for later
-        Vector avgNorm;
-        Coordinate avgPos;
+        Vector avgNorm(0, 0, 0);
+        Coordinate avgPos(0, 0, 0);
         Vertex ansVtx = Vertex::zero();
         double avgKd = 0;
         double avgKa = 0;
@@ -63,7 +63,7 @@ public:
     Screen shade(const DynArray<Vertex> &figure, const DynArray<ScreenVertex> &screenVtxs,
                  const IMaterial& material) override {
         // Checking if figure is empty
-        if (figure.count() == 0)
+        if (figure.count() == 0 || screenVtxs.count() == 0)
             return EMPTY_SCREEN;
 
         // Getting screen size
@@ -154,9 +154,10 @@ public:
                 tx = txInterpolator.interpolate(xDouble);
                 ty = tyInterpolator.interpolate(xDouble);
                 z = zInterpolator.interpolate(xDouble);
+                const auto& color = material.getColor(tx, ty, lightIntensity);
 
                 // Subtracting offset because we need to start drawing from (0, 0)
-                screen.setPixelColor(x - screenOffset.x, sy - screenOffset.y, material.getColor(tx, ty, lightIntensity), z);
+                screen.setPixelColor(x - screenOffset.x, sy - screenOffset.y, color, z);
             }
 
             // Changing first line and line interpolator if needed
