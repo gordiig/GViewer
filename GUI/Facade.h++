@@ -52,7 +52,7 @@ public:
 
         // Adding box to the scene
         std::shared_ptr<ISceneObject> box = std::make_shared<Box>(Box(10, 10, 5));
-        Coordinate newBoxOrigin = {-10, 0, 5};
+        Coordinate newBoxOrigin = {8, -7, 5};
         box->moveTo(newBoxOrigin);
         box->setTurnOrigin(newBoxOrigin);
         box->setScaleOrigin(newBoxOrigin);
@@ -78,9 +78,10 @@ public:
 //        scene.addSubobject(box);
 
         // Adding ambient light to the scene
-//        std::shared_ptr<ISceneObject> light = std::make_shared<AmbientLight>(AmbientLight(128));
-        std::shared_ptr<ISceneObject> light = std::make_shared<DotLight>(DotLight(255));
-        scene.addSubobject(light);
+//        std::shared_ptr<ISceneObject> alight = std::make_shared<AmbientLight>(AmbientLight(64));
+//        scene.addSubobject(alight);
+        std::shared_ptr<ISceneObject> dlight = std::make_shared<DotLight>(DotLight(255));
+        scene.addSubobject(dlight);
 
         scene.setKa(0.2);
     }

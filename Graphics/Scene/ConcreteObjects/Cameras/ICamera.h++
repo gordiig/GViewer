@@ -9,6 +9,7 @@
 #include "../../BaseSceneObject.h++"
 #include "../../../../Geometry/Basics/Vector.h++"
 #include "../../../../Geometry/Basics/Angle.h++"
+#include "../../../../Geometry/Transform/PointTransformer.h++"
 
 
 class ICamera: public BaseSceneObject {
@@ -44,6 +45,17 @@ public:
 
     [[nodiscard]] size_t getScreenWidth() const noexcept { return screenWidth; }
     [[nodiscard]] size_t getScreenHeight() const noexcept { return screenHeight; }
+
+    [[nodiscard]] Vector getSightVector() const noexcept {
+        // Initializing default sight vector for camera
+        Vector defaultSightVector{0, 0, 1};
+
+        // Transforming it to current camera position in global space
+        PointTransformer::move(defaultSightVector, getOrigin());
+        PointTransformer::turn(defaultSightVector, getAngles(), getTurnOrigin());
+
+        return defaultSightVector;
+    }
 
     ~ICamera() noexcept override = default;
 

@@ -108,6 +108,8 @@ public:
         return screen;
     }
 
+    [[nodiscard]] bool testFigure(const DynArray<Vertex> &figure) const override { return true; }
+
     ~SceletShader() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override { return "[SceletShader]"; }

@@ -24,7 +24,7 @@ public:
 
     unsigned short getIntensity(const Vertex &vertex) override {
         // Initializing some variables for later
-        unsigned short ans;
+        double ans;
         double cosForDiffuse;
         double diffuse;
         double kd = vertex.sc.getKd();
@@ -35,14 +35,18 @@ public:
         // Calculating cos between norm and prev vector
         cosForDiffuse = vtxToLightVector.cosBetweenVectors(vertex.vec);
 
+        // If cos < 0, returning 0
+        if (cosForDiffuse < 0)
+            return 0;
+
         // Calculating diffuse light
         diffuse = cosForDiffuse * kd;
 
         // Calculating intensity based on diffuse (ambient is calculating on special light source)
-        ans = (unsigned short) ((double) lightIntensity * diffuse);
+        ans = (double) lightIntensity * diffuse;
 
         // Returning resulting intensity as min between max possible intensity and calculated intensity
-        return std::min(ans, MAX_INTENSITY);
+        return (unsigned short) ans;
     }
 
     ~RenderableDotLight() noexcept override = default;

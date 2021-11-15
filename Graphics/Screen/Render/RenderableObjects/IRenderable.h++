@@ -40,6 +40,8 @@ public:
 
     [[nodiscard]] virtual Screen render() = 0;
 
+    [[nodiscard]] virtual bool testFigure() const noexcept = 0;
+
     ~IRenderable() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override { return "[IRenderable]"; }

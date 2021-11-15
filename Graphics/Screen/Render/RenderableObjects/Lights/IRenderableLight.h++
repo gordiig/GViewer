@@ -45,6 +45,7 @@ public:
 
     // Do not draw lights yet
     Screen render() override { return EMPTY_SCREEN; }
+    [[nodiscard]] bool testFigure() const noexcept override { return true; }
 
     ~IRenderableLight() noexcept override = default;
 

@@ -158,7 +158,7 @@ public:
     RenderablePolygon& operator = (RenderablePolygon &&move) noexcept = default;
 
     [[nodiscard]] Screen render() override {
-        if (vtxs.isEmpty())
+        if (vtxs.isEmpty() || !testFigure())
             return EMPTY_SCREEN;
 
         transformToCameraSpace();

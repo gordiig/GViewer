@@ -10,6 +10,7 @@
 #include "../IRenderable.h++"
 #include "../../../Graphics/Basics/Vertex.h++"
 #include "../../../Utils/Containers/DynArray.h++"
+#include "../../Shaders/IShader.h++"
 
 class ICamera;
 
@@ -33,6 +34,11 @@ public:
 
     Renderable3DObject& operator = (const Renderable3DObject &copy) = default;
     Renderable3DObject& operator = (Renderable3DObject &&move) noexcept = default;
+
+    [[nodiscard]] inline bool testFigure() const noexcept override {
+        const auto& currentShader = Settings::getInstance().getShader();
+        return currentShader.testFigure(vtxs);
+    }
 
     ~Renderable3DObject() noexcept override = default;
 

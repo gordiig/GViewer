@@ -132,6 +132,26 @@ public:
         this->lights = lights;
     }
 
+    [[nodiscard]] virtual bool testFigure(const DynArray<Vertex>& figure) const {
+        // Initializing average vector for figure
+        Vector avgVector(0, 0, 0);
+
+        // Calculating average vector
+        for (const auto& vtx : figure) {
+            avgVector += vtx.vec;
+        }
+        avgVector /= (double) figure.count();
+
+        // Getting camera vector
+        const auto& camera = Settings::getInstance().getCamera();
+        const auto& cameraVec = camera.getSightVector();
+
+        // Calculating cos between avg vector and camera vector
+        const auto& vectorsCos = cameraVec.scalarMultiply(avgVector);
+
+        return vectorsCos <= 0;
+    }
+
     ~IShader() noexcept override = default;
 
     [[nodiscard]] std::string toString() const override { return "[IShader]"; }
