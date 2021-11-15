@@ -107,6 +107,8 @@ public:
         const auto& avgVtx = getAvgVtxForLighting(figure);
         const auto& lightIntensity = getIntensityForVtx(avgVtx);
 
+        int zzzzz = 1;
+
         // Main loop
         size_t x1, x2;
         double x1Double, x2Double;

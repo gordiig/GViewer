@@ -12,13 +12,14 @@
 #include "../../../../../Geometry/Basics/Vector.h++"
 #include "../../../../../Geometry/Basics/Point3.h++"
 #include "../../../../../Geometry/Transform/PointTransformer.h++"
+#include "../../../../../Utils/Containers/RangedValue.h++"
 
 class ICamera;
 
 class IRenderableLight: public IRenderable {
 protected:
     Coordinate lightPosition;
-    unsigned short lightIntensity;
+    RangedValue<unsigned short> lightIntensity;
 
     // Do not draw lights yet
     void transformToCameraSpace() override { }

@@ -28,7 +28,7 @@ public:
         double ka = vertex.sc.getKa();
 
         // Calculating intensity based on ambient
-        ans = (unsigned short) ((double) lightIntensity * ka);
+        ans = (unsigned short) ((double) lightIntensity.getValue() * ka);
 
         // Returning resulting intensity as min between max possible intensity and calculated intensity
         return std::min(ans, MAX_INTENSITY);

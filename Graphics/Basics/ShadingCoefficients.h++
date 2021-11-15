@@ -7,17 +7,19 @@
 
 #include "../../Exceptions/Exception.h++"
 #include "../../Utils/BaseObject.h++"
+#include "../../Utils/Containers/RangedValue.h++"
 
 class ShadingCoefficients: public BaseObject {
 protected:
-    double kd = 0;
-    // Need to change
-    double ka = 0;
+    RangedValue<double> kd {1.0, 0.0, 1.0};
+    RangedValue<double> ka {1.0, 0.0, 1.0};
+    RangedValue<double> ks {1.0, 0.0, 1.0};
 
 public:
-    explicit ShadingCoefficients(double kd = 0, double ka = 0) {
+    explicit ShadingCoefficients(double kd = 0.0, double ka = 0.0, double ks = 0.0) {
         setKd(kd);
         setKa(ka);
+        setKs(ks);
     }
 
     ShadingCoefficients(const ShadingCoefficients &sc) noexcept  = default;
@@ -28,22 +30,18 @@ public:
 
     ~ShadingCoefficients() noexcept override = default;
 
-    bool operator == (const ShadingCoefficients &rhs) const { return doubleEq(ka, rhs.ka) && doubleEq(kd, rhs.kd); }
+    bool operator == (const ShadingCoefficients &rhs) const {
+        return kd == rhs.kd && ka == rhs.ka && ks == rhs.ks;
+    }
     bool operator != (const ShadingCoefficients &rhs) const { return !(rhs == *this); }
 
-    [[nodiscard]] double getKd() const { return kd; }
-    [[nodiscard]] double getKa() const { return ka; }
+    [[nodiscard]] double getKd() const { return (double) kd; }
+    [[nodiscard]] double getKa() const { return (double) ka; }
+    [[nodiscard]] double getKs() const { return (double) ks; }
 
-    void setKd(double kd) {
-        if (kd < 0 || kd > 1)
-            throw BadArgumentError(EXC_PARAMS, "Kd must be in [0, 1] range");
-        this->kd = kd;
-    }
-    void setKa(double ka) {
-        if (ka < 0 || ka > 1)
-            throw BadArgumentError(EXC_PARAMS, "Ka must be in [0, 1] range");
-        this->ka = ka;
-    }
+    void setKd(double value) { this->kd = value; }
+    void setKa(double value) { this->ka = value; }
+    void setKs(double value) { this->ks = value; }
 
     [[nodiscard]] std::string toString() const override {
         std::stringstream sst;

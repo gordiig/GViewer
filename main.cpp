@@ -64,6 +64,7 @@
 #include "Utils/Containers/DynArray.h++"
 #include "Utils/Containers/Matrix.h++"
 #include "Utils/Containers/Pair.h++"
+#include "Utils/Containers/RangedValue.h++"
 
 #include "GUI/MainWindow.h++"
 #include "GUI/ScreenView.h++"

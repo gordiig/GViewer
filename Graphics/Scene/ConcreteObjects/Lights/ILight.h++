@@ -8,14 +8,17 @@
 #include "../../BaseSceneObject.h++"
 #include "../../../../Exceptions/Exception.h++"
 #include "../../../../Graphics/Basics/Vertex.h++"
+#include "../../../../Utils/Containers/RangedValue.h++"
 
 
 class ILight: public BaseSceneObject {
 protected:
-    unsigned short intensity = 128;
+    RangedValue<unsigned short> intensity;
 
 public:
-    explicit ILight(unsigned short intensity = 128) : BaseSceneObject() { setIntensity(intensity); }
+    explicit ILight(unsigned short intensity = 128) : BaseSceneObject(), intensity(intensity, 0, 255) {
+
+    }
 
     ILight(const ILight &copy) noexcept = default;
     ILight(ILight &&move) noexcept = default;
@@ -23,17 +26,13 @@ public:
     ILight& operator = (const ILight &copy) noexcept = default;
     ILight& operator = (ILight &&move) noexcept = default;
 
-    [[nodiscard]] unsigned short getIntensity() const noexcept { return intensity; }
+    [[nodiscard]] inline RangedValue<unsigned short > getIntensity() const noexcept { return intensity; }
 
-    void setIntensity(unsigned short intensity) {
-        if (intensity > 255)
-            throw BadArgumentError(EXC_PARAMS, "aIntensity must be in [0, 255] range");
-        this->intensity = intensity;
-    }
+    inline void setIntensity(unsigned short value) { this->intensity = value; }
 
-    [[nodiscard]] double width() const noexcept override { return 0; }
-    [[nodiscard]] double height() const noexcept override { return 0; }
-    [[nodiscard]] double depth() const noexcept override { return 0; }
+    [[nodiscard]] inline double width() const noexcept override { return 0; }
+    [[nodiscard]] inline double height() const noexcept override { return 0; }
+    [[nodiscard]] inline double depth() const noexcept override { return 0; }
 
     ~ILight() noexcept override = default;
 

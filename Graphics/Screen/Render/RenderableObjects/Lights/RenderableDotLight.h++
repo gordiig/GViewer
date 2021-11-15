@@ -43,7 +43,7 @@ public:
         diffuse = cosForDiffuse * kd;
 
         // Calculating intensity based on diffuse (ambient is calculating on special light source)
-        ans = (double) lightIntensity * diffuse;
+        ans = (double) lightIntensity.getValue() * diffuse;
 
         // Returning resulting intensity as min between max possible intensity and calculated intensity
         return (unsigned short) ans;
