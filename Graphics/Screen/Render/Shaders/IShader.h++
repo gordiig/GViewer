@@ -9,8 +9,8 @@
 #include "../../Screen.h++"
 #include "../../../../Utils/Containers/DynArray.h++"
 #include "../../../../Utils/Containers/Pair.h++"
-#include "../../../../Utils/Interpolator.h++"
-#include "../../../../Utils/LineInterpolator.h++"
+#include "../../../../Utils/Interpolation/Interpolator.h++"
+#include "../../../../Utils/Interpolation/LineInterpolation/LineInterpolator.h++"
 #include "../../../../Graphics/Basics/Vertex.h++"
 #include "../../../../Geometry/Basics/Point2.h++"
 #include "../../../../Utils/BaseObject.h++"
@@ -117,20 +117,27 @@ protected:
         return (size_t) ans;
     }
 
-    unsigned short getIntensityForVtx(const Vertex &vtx) {
-        unsigned short totalIntensity = 0;
-        for (const auto &light : lights)
-            totalIntensity += light->getIntensity(vtx);
-        return std::min(totalIntensity, IRenderableLight::MAX_INTENSITY);
+    short getIntensityForVtx(const Vertex &vtx) {
+        // Total intensity equals as a sum from all light sources
+        short totalIntensity = 0;
+        for (const auto &light : lights) {
+            totalIntensity += (short) light->getIntensity(vtx);
+
+            // If intensity is gte, then max light intensity, break
+            if (totalIntensity >= IRenderableLight::MAX_INTENSITY) {
+                totalIntensity = IRenderableLight::MAX_INTENSITY;
+                break;
+            }
+        }
+
+        return totalIntensity;
     }
 
 public:
     virtual Screen shade(const DynArray<Vertex>& figure, const DynArray<ScreenVertex>& screenVtxs,
                          const IMaterial& material) = 0;
 
-    virtual void configure(const DynArray<std::shared_ptr<IRenderableLight>> &lights) {
-        this->lights = lights;
-    }
+    virtual void addLights(const DynArray<std::shared_ptr<IRenderableLight>> &lights) { this->lights = lights; }
 
     [[nodiscard]] virtual bool testFigure(const DynArray<Vertex>& figure) const {
         // Initializing average vector for figure

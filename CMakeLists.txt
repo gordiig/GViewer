@@ -53,8 +53,8 @@ add_executable(
         Graphics/Screen/Render/RenderableObjects/IRenderable.h++
         Graphics/Screen/Render/RenderableObjects/3D/RenderablePolygon.h++
         Graphics/Screen/Render/Shaders/IShader.h++
-        Utils/Interpolator.h++
-        Utils/LineInterpolator.h++
+        Utils/Interpolation/Interpolator.h++
+        Utils/Interpolation/LineInterpolation/LineInterpolator.h++
         Graphics/Screen/CameraPyramid.h++
         Graphics/Screen/Render/Shaders/LambertShader.h++
         Graphics/Screen/Render/Shaders/GouraudShader.h++
@@ -68,7 +68,7 @@ add_executable(
         Graphics/Scene/ConcreteObjects/cpp/AmbientLight.cpp
         Graphics/Scene/ConcreteObjects/cpp/DotLight.cpp
         consts.cpp
-        GUI/MainWindow.h++ GUI/ScreenView.h++ GUI/RightMenu.h++ GUI/CoordsRow.h++ GUI/Utils/LabeledSpinBox.h++ Graphics/Scene/ConcreteObjects/Scene.h++ GUI/Facade.h++ Graphics/Scene/ConcreteObjects/Cameras/Camera.h++ Graphics/Screen/Render/Shaders/SceletShader.h++ Utils/Containers/RangedValue.h++)
+        GUI/MainWindow.h++ GUI/ScreenView.h++ GUI/RightMenu.h++ GUI/CoordsRow.h++ GUI/Utils/LabeledSpinBox.h++ Graphics/Scene/ConcreteObjects/Scene.h++ GUI/Facade.h++ Graphics/Scene/ConcreteObjects/Cameras/Camera.h++ Graphics/Screen/Render/Shaders/SceletShader.h++ Utils/Containers/RangedValue.h++ Utils/Interpolation/LineInterpolation/ILineInterpolatorLine.h++ Utils/Interpolation/LineInterpolation/Point2InterpolationLine.h++)
 
 target_link_libraries(GViewer
         PUBLIC

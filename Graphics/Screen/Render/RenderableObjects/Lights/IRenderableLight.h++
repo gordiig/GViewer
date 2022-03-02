@@ -19,7 +19,7 @@ class ICamera;
 class IRenderableLight: public IRenderable {
 protected:
     Coordinate lightPosition;
-    RangedValue<unsigned short> lightIntensity;
+    RangedValue<short> lightIntensity;
 
     // Do not draw lights yet
     void transformToCameraSpace() override { }
@@ -28,8 +28,11 @@ protected:
     void transformToScreenSpace() override { }
     Screen drawObject() override { return EMPTY_SCREEN; }
 
+    // Do not draw lights yet
+    [[nodiscard]] bool testFigure() const noexcept override { return true; }
+
 public:
-    const static unsigned short MAX_INTENSITY;
+    const static short MAX_INTENSITY;
 
     explicit IRenderableLight(const ILight &light) noexcept :
             IRenderable(), lightPosition(light.getOrigin()), lightIntensity(light.getIntensity()) {
@@ -42,11 +45,10 @@ public:
     IRenderableLight& operator = (const IRenderableLight &copy) noexcept = default;
     IRenderableLight& operator = (IRenderableLight &&move) noexcept = default;
 
-    virtual unsigned short getIntensity(const Vertex &vertex) = 0;
+    virtual RangedValue<short> getIntensity(const Vertex &vertex) = 0;
 
     // Do not draw lights yet
     Screen render() override { return EMPTY_SCREEN; }
-    [[nodiscard]] bool testFigure() const noexcept override { return true; }
 
     ~IRenderableLight() noexcept override = default;
 

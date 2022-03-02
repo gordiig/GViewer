@@ -9,6 +9,7 @@
 #include "../../../../Scene/ConcreteObjects/Lights/DotLight.h++"
 #include "../../../../Basics/Vertex.h++"
 #include "../../../../../Geometry/Basics/Vector.h++"
+#include "../../../../../Utils/Containers/RangedValue.h++"
 
 class ICamera;
 
@@ -22,7 +23,7 @@ public:
     RenderableDotLight& operator = (const RenderableDotLight &copy) noexcept = default;
     RenderableDotLight& operator = (RenderableDotLight &&move) noexcept = default;
 
-    unsigned short getIntensity(const Vertex &vertex) override {
+    RangedValue<short> getIntensity(const Vertex &vertex) override {
         // Initializing some variables for later
         double ans;
         double cosForDiffuse;
@@ -37,7 +38,7 @@ public:
 
         // If cos < 0, returning 0
         if (cosForDiffuse < 0)
-            return 0;
+            return RangedValue<short>(0, 0, 255);
 
         // Calculating diffuse light
         diffuse = cosForDiffuse * kd;
@@ -46,7 +47,7 @@ public:
         ans = (double) lightIntensity.getValue() * diffuse;
 
         // Returning resulting intensity as min between max possible intensity and calculated intensity
-        return (unsigned short) ans;
+        return RangedValue<short>((short) ans, 0, 255);
     }
 
     ~RenderableDotLight() noexcept override = default;

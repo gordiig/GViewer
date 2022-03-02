@@ -58,8 +58,10 @@
 #include "Graphics/Materials/IMaterial.h++"
 #include "Graphics/Materials/ColorMaterial.h++"
 
-#include "Utils/Interpolator.h++"
-#include "Utils/LineInterpolator.h++"
+#include "Utils/Interpolation/Interpolator.h++"
+#include "Utils/Interpolation/LineInterpolation/LineInterpolator.h++"
+#include "Utils/Interpolation/LineInterpolation/ILineInterpolatorLine.h++"
+#include "Utils/Interpolation/LineInterpolation/Point2InterpolationLine.h++"
 
 #include "Utils/Containers/DynArray.h++"
 #include "Utils/Containers/Matrix.h++"

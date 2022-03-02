@@ -7,10 +7,10 @@
 
 #include <utility>
 
-#include "BaseObject.h++"
-#include "Containers/Pair.h++"
-#include "../Exceptions/Math.h++"
-#include "../Geometry/Basics/Point2.h++"
+#include "../../BaseObject.h++"
+#include "../../Containers/Pair.h++"
+#include "../../../Exceptions/Math.h++"
+#include "../../../Geometry/Basics/Point2.h++"
 
 
 class LineInterpolator: public BaseObject {
@@ -47,7 +47,7 @@ public:
         // Calculating interpolation coefficient
         double t;
         if (doubleEq(baseline.first.x, baseline.second.x))
-            // If baseline ends are equal,
+            // If originalScale ends are equal,
             // setting coefficient for taking average from interpolation corners
             t = 0.5;
         else
@@ -71,7 +71,7 @@ public:
 
         double t;
         if (doubleEq(baseline.first.y, baseline.second.y))
-            // If baseline ends are equal,
+            // If originalScale ends are equal,
             // setting coefficient for taking average from interpolation corners
             t = 0.5;
         else

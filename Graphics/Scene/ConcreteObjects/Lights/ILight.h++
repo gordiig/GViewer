@@ -13,10 +13,10 @@
 
 class ILight: public BaseSceneObject {
 protected:
-    RangedValue<unsigned short> intensity;
+    RangedValue<short> intensity;
 
 public:
-    explicit ILight(unsigned short intensity = 128) : BaseSceneObject(), intensity(intensity, 0, 255) {
+    explicit ILight(short intensity = 128) : BaseSceneObject(), intensity(intensity, 0, 255) {
 
     }
 
@@ -26,9 +26,9 @@ public:
     ILight& operator = (const ILight &copy) noexcept = default;
     ILight& operator = (ILight &&move) noexcept = default;
 
-    [[nodiscard]] inline RangedValue<unsigned short > getIntensity() const noexcept { return intensity; }
+    [[nodiscard]] inline RangedValue<short> getIntensity() const noexcept { return intensity; }
 
-    inline void setIntensity(unsigned short value) { this->intensity = value; }
+    inline void setIntensity(short value) { this->intensity = value; }
 
     [[nodiscard]] inline double width() const noexcept override { return 0; }
     [[nodiscard]] inline double height() const noexcept override { return 0; }

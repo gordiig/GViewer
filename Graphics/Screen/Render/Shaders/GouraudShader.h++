@@ -13,8 +13,8 @@
 #include "../../../../Geometry/Basics/Vector.h++"
 #include "../../../../Utils/Containers/DynArray.h++"
 #include "../../../../Utils/Containers/Pair.h++"
-#include "../../../../Utils/LineInterpolator.h++"
-#include "../../../../Utils/Interpolator.h++"
+#include "../../../../Utils/Interpolation/LineInterpolation/LineInterpolator.h++"
+#include "../../../../Utils/Interpolation/Interpolator.h++"
 
 class GouraudShader: public IShader {
 protected:

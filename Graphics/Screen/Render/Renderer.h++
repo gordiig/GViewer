@@ -28,7 +28,7 @@ public:
         // Getting shader and configuring it with lights
         const auto& settings = Settings::getInstance();
         auto& shader = settings.getShader();
-        shader.configure(lights);
+        shader.addLights(lights);
 
         // Getting camera screen size
         const auto& camera = settings.getCamera();

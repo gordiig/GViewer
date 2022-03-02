@@ -36,10 +36,16 @@ public:
     ~Settings() noexcept override = default;
 
     [[nodiscard]] IRenderer& getRenderer() const { return *renderer; }
+    [[nodiscard]] std::shared_ptr<IRenderer> getRendererPtr() const { return renderer; }
+
     [[nodiscard]] ICamera& getCamera() const { return *currentCamera; }
     [[nodiscard]] std::shared_ptr<ICamera> getCameraPtr() const { return currentCamera; }
+
     [[nodiscard]] IShader& getShader() const { return *currentShader; }
+    [[nodiscard]] std::shared_ptr<IShader> getShaderPtr() const { return currentShader; }
+
     [[nodiscard]] CameraPyramid& getCameraPyramid() { return *cameraPyramid; };
+    [[nodiscard]] std::shared_ptr<CameraPyramid> getCameraPyramidPtr() { return cameraPyramid; };
 
     void setRenderer(const std::shared_ptr<IRenderer> &newRenderer) { this->renderer = newRenderer; }
     void setCamera(const std::shared_ptr<ICamera> &newCamera) {

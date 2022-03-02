@@ -14,11 +14,13 @@
 #include "../../../../Settings/Settings.h++"
 
 class ICamera;
+class IShader;
 
 class IRenderable: public BaseObject {
 protected:
     const static Screen EMPTY_SCREEN;
     std::shared_ptr<ICamera> camera;
+    std::shared_ptr<IShader> shader;
 
     virtual void transformToCameraSpace() = 0;
     virtual void cutByCameraPyramid() = 0;
@@ -26,10 +28,13 @@ protected:
     virtual void transformToScreenSpace() = 0;
     virtual Screen drawObject() = 0;
 
+    [[nodiscard]] virtual bool testFigure() const noexcept = 0;
+
 public:
     IRenderable() noexcept {
         const auto& settings = Settings::getInstance();
         camera = settings.getCameraPtr();
+        shader = settings.getShaderPtr();
     }
 
     IRenderable(const IRenderable &copy) = default;
@@ -39,8 +44,6 @@ public:
     IRenderable& operator = (IRenderable &&move) noexcept = default;
 
     [[nodiscard]] virtual Screen render() = 0;
-
-    [[nodiscard]] virtual bool testFigure() const noexcept = 0;
 
     ~IRenderable() noexcept override = default;
 

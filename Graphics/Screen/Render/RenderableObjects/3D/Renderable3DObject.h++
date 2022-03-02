@@ -8,21 +8,20 @@
 #include <utility>
 
 #include "../IRenderable.h++"
+#include "../../Shaders/IShader.h++"
 #include "../../../Graphics/Basics/Vertex.h++"
 #include "../../../Utils/Containers/DynArray.h++"
-#include "../../Shaders/IShader.h++"
 
-class ICamera;
 
 class Renderable3DObject: public IRenderable {
 protected:
-    using VertexLine = Pair<ScreenVertex, ScreenVertex>;
-
     DynArray<Vertex> vtxs;
     DynArray<Vertex> vtxsInCameraSpace;
     DynArray<Vertex> vtxsCuttedByCameraPyramid;
     DynArray<Vertex> projectedVtxs;
     DynArray<ScreenVertex> screenVtxs;
+
+    [[nodiscard]] inline bool testFigure() const noexcept override { return shader->testFigure(vtxs); }
 
 public:
     explicit Renderable3DObject(const DynArray<Vertex> &vtxs) :
@@ -34,11 +33,6 @@ public:
 
     Renderable3DObject& operator = (const Renderable3DObject &copy) = default;
     Renderable3DObject& operator = (Renderable3DObject &&move) noexcept = default;
-
-    [[nodiscard]] inline bool testFigure() const noexcept override {
-        const auto& currentShader = Settings::getInstance().getShader();
-        return currentShader.testFigure(vtxs);
-    }
 
     ~Renderable3DObject() noexcept override = default;
 

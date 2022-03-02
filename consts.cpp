@@ -3,7 +3,7 @@
 //
 
 #include "Graphics/Screen/Render/RenderableObjects/Lights/IRenderableLight.h++"
-const unsigned short IRenderableLight::MAX_INTENSITY = 255;
+const short IRenderableLight::MAX_INTENSITY = 255;
 
 #include "Graphics/Scene/ISceneObject.h++"
 unsigned long long ISceneObject::idCounter = 0;

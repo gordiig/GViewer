@@ -22,7 +22,7 @@ public:
     RenderableAmbientLight& operator = (const RenderableAmbientLight &copy) noexcept = default;
     RenderableAmbientLight& operator = (RenderableAmbientLight &&move) noexcept = default;
 
-    unsigned short getIntensity(const Vertex &vertex) override {
+    RangedValue<short> getIntensity(const Vertex &vertex) override {
         // Initializing some variables for later
         unsigned short ans;
         double ka = vertex.sc.getKa();
@@ -31,7 +31,7 @@ public:
         ans = (unsigned short) ((double) lightIntensity.getValue() * ka);
 
         // Returning resulting intensity as min between max possible intensity and calculated intensity
-        return std::min(ans, MAX_INTENSITY);
+        return RangedValue<short>((short) ans, 0, 255);
     }
 
     ~RenderableAmbientLight() noexcept override = default;
